@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{498DB1B9-BD00-464B-86B7-1A9FCC1A26CD}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NRatings.Client</RootNamespace>
+    <AssemblyName>NRatings.Client</AssemblyName>
+    <StartupObject>NRatings.Client.Program</StartupObject>
+    <ApplicationIcon>Resources\scoring.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <SignAssembly>false</SignAssembly>
+    <ManifestCertificateThumbprint>35BC08DB20CD1FFF8DD4DC78A3E9943E2A8B0D37</ManifestCertificateThumbprint>
+    <ManifestKeyFile>NRatings_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <TargetZone>Internet</TargetZone>
+    <SignManifests>false</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <PublishUrl>D:\Deploy\NRatings\Client\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <SupportUrl>http://www.tjsoft.be/nratings</SupportUrl>
+    <ProductName>NRatings</ProductName>
+    <PublisherName>TJSoft</PublisherName>
+    <MinimumRequiredVersion>4.2.5.0</MinimumRequiredVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>5.0.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TJSoft.NRatings.Client.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="JPackage">
+      <HintPath>..\..\lib\JPackage\JPackage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.JScript" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiClient\APIClientSettings.cs" />
+    <Compile Include="ApiClient\ClientBase.cs" />
+    <Compile Include="ApiClient\DTO\Car.cs" />
+    <Compile Include="ApiClient\DTO\Driver.cs" />
+    <Compile Include="ApiClient\DTO\Race.cs" />
+    <Compile Include="ApiClient\DTO\RaceLoopData.cs" />
+    <Compile Include="ApiClient\DTO\RacePitStopData.cs" />
+    <Compile Include="ApiClient\DTO\RaceResult.cs" />
+    <Compile Include="ApiClient\DTO\RacesDetails.cs" />
+    <Compile Include="ApiClient\DTO\RaceState.cs" />
+    <Compile Include="ApiClient\DTO\Season.cs" />
+    <Compile Include="ApiClient\DTO\Series.cs" />
+    <Compile Include="ApiClient\DTO\Track.cs" />
+    <Compile Include="ApiClient\DTO\TrackType.cs" />
+    <Compile Include="ApiClient\NRatingsApiClient.cs" />
+    <Compile Include="Auxiliary\Exceptions\DataProcessingException.cs" />
+    <Compile Include="Auxiliary\ExtensionMethods.cs" />
+    <Compile Include="Auxiliary\GenericBackWorker.cs" />
+    <Compile Include="Auxiliary\Helper.cs" />
+    <Compile Include="Auxiliary\EnumListItem.cs" />
+    <Compile Include="Business\RRDataFetcher.cs" />
+    <Compile Include="Business\MainProcessor.cs" />
+    <Compile Include="Business\RatingsModifier.cs" />
+    <Compile Include="Business\RealDataProcessor.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Domain\AccessTestResult.cs" />
+    <Compile Include="Domain\Car.cs" />
+    <Compile Include="Domain\DriverRaceData.cs" />
+    <Compile Include="Domain\NR2003Car.cs" />
+    <Compile Include="Domain\Collections\CarCollection.cs" />
+    <Compile Include="Domain\Collections\RatingsFormulaCollection.cs" />
+    <Compile Include="Domain\Collections\RealDriverCollection.cs" />
+    <Compile Include="Domain\Driver.cs" />
+    <Compile Include="Domain\DriverStats.cs" />
+    <Compile Include="Domain\Enums.cs" />
+    <Compile Include="Domain\FormulaOptions.cs" />
+    <Compile Include="Domain\FormulaVariableList.cs" />
+    <Compile Include="Domain\LoopData.cs" />
+    <Compile Include="Domain\NR2003Instance.cs" />
+    <Compile Include="Domain\PitStopData.cs" />
+    <Compile Include="Domain\Race.cs" />
+    <Compile Include="Domain\RaceInfo.cs" />
+    <Compile Include="Domain\RaceResult.cs" />
+    <Compile Include="Domain\RaceState.cs" />
+    <Compile Include="Domain\Rating.cs" />
+    <Compile Include="Domain\Ratings.cs" />
+    <Compile Include="Domain\RatingsFormula.cs" />
+    <Compile Include="Domain\RatingsPerformanceWeight.cs" />
+    <Compile Include="Domain\RealDriver.cs" />
+    <Compile Include="Domain\Roster.cs" />
+    <Compile Include="Domain\Mod.cs" />
+    <Compile Include="Domain\Season.cs" />
+    <Compile Include="Domain\Series.cs" />
+    <Compile Include="Domain\Track.cs" />
+    <Compile Include="Domain\TrackType.cs" />
+    <Compile Include="Domain\UserSettings.cs" />
+    <Compile Include="EventHandling\CustomEventArgs.cs" />
+    <Compile Include="Extension\ExtensionMethods.cs" />
+    <Compile Include="UserSettingsManager.cs" />
+    <Compile Include="GUI\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\cCheckedListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\frmDriverRatings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmDriverRatings.Designer.cs">
+      <DependentUpon>frmDriverRatings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmDriverStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmDriverStats.Designer.cs">
+      <DependentUpon>frmDriverStats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmPitStopData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmPitStopData.Designer.cs">
+      <DependentUpon>frmPitStopData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmLoopData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmLoopData.Designer.cs">
+      <DependentUpon>frmLoopData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmBase.Designer.cs">
+      <DependentUpon>frmBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmGetRealData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmGetRealData.Designer.cs">
+      <DependentUpon>frmGetRealData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmModifyRatings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmModifyRatings.Designer.cs">
+      <DependentUpon>frmModifyRatings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmRosterFileName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmRosterFileName.Designer.cs">
+      <DependentUpon>frmRosterFileName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmNR2003Ratings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmNR2003Ratings.Designer.cs">
+      <DependentUpon>frmNR2003Ratings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmRaceResults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmRaceResults.Designer.cs">
+      <DependentUpon>frmRaceResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\frmUserSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\frmUserSettings.Designer.cs">
+      <DependentUpon>frmUserSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\LogBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\LogBox.Designer.cs">
+      <DependentUpon>LogBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RatingsFormulaSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RatingsFormulaSelection.Designer.cs">
+      <DependentUpon>RatingsFormulaSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RatingsGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RatingsGroup.Designer.cs">
+      <DependentUpon>RatingsGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RatingsItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\RatingsItem.Designer.cs">
+      <DependentUpon>RatingsItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\Message.cs" />
+    <Compile Include="Validation\ValidatedResult.cs" />
+    <EmbeddedResource Include="GUI\AboutBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmDriverRatings.resx">
+      <DependentUpon>frmDriverRatings.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmDriverStats.resx">
+      <DependentUpon>frmDriverStats.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmPitStopData.resx">
+      <DependentUpon>frmPitStopData.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmLoopData.resx">
+      <DependentUpon>frmLoopData.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmBase.resx">
+      <DependentUpon>frmBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmGetRealData.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmGetRealData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmModifyRatings.resx">
+      <DependentUpon>frmModifyRatings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmRosterFileName.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmRosterFileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmNR2003Ratings.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmNR2003Ratings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmRaceResults.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmRaceResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\frmUserSettings.resx">
+      <DependentUpon>frmUserSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\LogBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LogBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RatingsFormulaSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RatingsFormulaSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RatingsGroup.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RatingsGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RatingsItem.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RatingsItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.Debug.Config">
+      <DependentUpon>App.Config</DependentUpon>
+    </None>
+    <None Include="App.Release.Config">
+      <DependentUpon>App.Config</DependentUpon>
+    </None>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\nratings_credits.rtf" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scoring.ico" />
+    <None Include="Resources\ScoreTower.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EmbeddedFormulas\" />
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="EmbeddedFormulas\ethone_2008_v21.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="EmbeddedFormulas\Pbfoot_Finishing_v1.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="EmbeddedFormulas\Pbfoot_Qualifying_v1.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="EmbeddedFormulas\rupe.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="EmbeddedFormulas\rupe_GN.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+    <PublishFile Include="EmbeddedFormulas\Synderart_v2.xml">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Reactor_Enabled="0" Reactor_Lib="0" Reactor_Automatic="1" Reactor_Commands="" Reactor_Project="" Reactor_Output="[main_assembly_dir]NRatings_Secure\NRatings.exe" BuildVersion_UpdateAssemblyVersion="False" BuildVersion_UpdateFileVersion="False" BuildVersion_BuildVersioningStyle="None.None.None.None" BuildVersion_UseGlobalSettings="False" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="Exists('App.$(Configuration).Config')">
+    <!--Generate transformed app config in the intermediate directory-->
+    <TransformXml Source="App.Config" Destination="$(IntermediateOutputPath)$(TargetFileName).Config" Transform="App.$(Configuration).Config" />
+    <!--Force build process to use the transformed configuration file from now on.-->
+  </Target>
+  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
+  <Target Name="AfterPublish">
+    <PropertyGroup>
+      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+    </PropertyGroup>
+    <!--Publish copies the untransformed App.config to deployment directory so overwrite it-->
+    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+  </Target>
+</Project>
