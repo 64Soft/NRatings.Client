@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<RatingsFormula xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Name>Qualifying Ratings by PbFoot</Name>
+<Author>Pbfoot @ TheRacingGroove.com</Author>
+<Version>v1</Version>
+<Description>Used to re-create realistic single-race qualifying results. After qualifying is finished, save the results, exit the game, apply my Finishing Ratings formula with NRatings, restart game.</Description>
+<Options>
+<UseNr2003TrackTypes>false</UseNr2003TrackTypes>
+<MappingMethod>NUMBER_AND_NAME</MappingMethod>
+</Options>
+  <DriverAggressionMin>100.0 - (@avgStart * 1.50) -1</DriverAggressionMin>
+  <DriverAggressionMax>100.0 - (@avgStart * 1.50)</DriverAggressionMax>
+  <DriverConsistencyMin>100.0 - (@avgStart * 1.50) -1</DriverConsistencyMin>
+  <DriverConsistencyMax>100.0 - (@avgStart * 1.50)</DriverConsistencyMax>
+  <DriverFinishingMin>100.0 - (@avgStart * 1.50) - 1</DriverFinishingMin>
+  <DriverFinishingMax>100.0 - (@avgStart * 1.50)</DriverFinishingMax>
+  <DriverQualifyingMin>100.0 - (@avgStart * 1.50) - 1</DriverQualifyingMin>
+  <DriverQualifyingMax>100.0 - (@avgStart * 1.50)</DriverQualifyingMax>
+  <DriverRoadCourseMin>100.0 - (@avgStart * 1.50) -1</DriverRoadCourseMin>
+  <DriverRoadCourseMax>100.0 - (@avgStart * 1.50)</DriverRoadCourseMax>
+  <DriverShortTrackMin>100.0 - (@avgStart * 1.50) -1</DriverShortTrackMin>
+  <DriverShortTrackMax>100.0 - (@avgStart * 1.50)</DriverShortTrackMax>
+  <DriverSpeedwayMin>100.0 - (@avgStart * 1.50) -1</DriverSpeedwayMin>
+  <DriverSpeedwayMax>100.0 - (@avgStart * 1.50)</DriverSpeedwayMax>
+  <DriverSuperSpeedwayMin>100.0 - (@avgStart * 1.50) -1</DriverSuperSpeedwayMin>
+  <DriverSuperSpeedwayMax>100.0 - (@avgStart * 1.50)</DriverSuperSpeedwayMax>
+  <VehicleAeroMin>100.0 - (@avgStart * 1.50) - 1</VehicleAeroMin>
+  <VehicleAeroMax>100.0 - (@avgStart * 1.50)</VehicleAeroMax>
+  <VehicleChassisMin>100.0 - (@avgStart * 1.50) - 1</VehicleChassisMin>
+  <VehicleChassisMax>100.0 - (@avgStart * 1.50)</VehicleChassisMax>
+  <VehicleEngineMin>100.0 - (@avgStart * 1.50) - 1</VehicleEngineMin>
+  <VehicleEngineMax>100.0 - (@avgStart * 1.50)</VehicleEngineMax>
+  <VehicleReliabilityMin>100.0 - ((@avgFinish + @wins + @top5 + @top10) * 20.0) / 37.0 - (@dnf * 5) - 2</VehicleReliabilityMin>
+  <VehicleReliabilityMax>100.0 - ((@avgFinish + @wins + @top5 + @top10) * 20.0) / 37.0 - (@dnf * 5)</VehicleReliabilityMax>
+  <PitcrewConsistencyMin>99.0</PitcrewConsistencyMin>
+  <PitcrewConsistencyMax>100.0</PitcrewConsistencyMax>
+  <PitcrewSpeedMin>99.0</PitcrewSpeedMin>
+  <PitcrewSpeedMax>100.0</PitcrewSpeedMax>
+  <PitcrewStrategyMin>99.0</PitcrewStrategyMin>
+  <PitcrewStrategyMax>100.0</PitcrewStrategyMax>
+</RatingsFormula>

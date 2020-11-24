@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<RatingsFormula xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>rupe's ratings-GN</Name>
+  <Author>snyderart and rupe</Author>
+  <Version>v2.2</Version>
+  <Description>works best with seasons of more than 37 races (Grand National, Strictly Stock).</Description>
+  <Options>
+  <UseNr2003TrackTypes>false</UseNr2003TrackTypes>
+  <MappingMethod>NUMBER_AND_NAME</MappingMethod>
+  </Options>
+
+  <DriverAggressionMin>95 - (@avgStart + @avgFinish)</DriverAggressionMin>
+  <DriverAggressionMax>98 - @avgFinish + (@wins * 2)</DriverAggressionMax>
+  <DriverConsistencyMin>82 - @dnf - @avgFinish</DriverConsistencyMin>
+  <DriverConsistencyMax>97 - @avgFinish</DriverConsistencyMax>
+  <DriverFinishingMin>80 - @avgFinish - @dnf</DriverFinishingMin>
+  <DriverFinishingMax>99 - @avgFinish</DriverFinishingMax>
+  <DriverQualifyingMin>var rating = 0;   
+                                         if (@avgStart == 30)
+                                              rating = 19 + (@raceStarts / 3) - (@avgStart / 4);
+                                         else rating = 29 + (@raceStarts / 1.5);    </DriverQualifyingMin>
+                                         
+  <DriverQualifyingMax>68 + (@raceStarts / 5) - (@avgStart / 3);</DriverQualifyingMax>
+  
+  <DriverRoadCourseMin>var rating = 0;
+                                                if(@raceStartsRC == null) 
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - (@avgFinishRC * 45.0) / 43.0;
+    
+                                                rating = rating - 20;
+                                                </DriverRoadCourseMin>
+  <DriverRoadCourseMax>var rating = 0;
+                                                if(@raceStartsRC == null) 
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - (@avgFinishRC * 60.0) / 43.0;
+    
+                                                rating = rating + 0;
+                                                </DriverRoadCourseMax>
+  <DriverShortTrackMin>var rating = 0;
+                                                if(@raceStartsST == null) 
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - (@avgFinishST * 45.0) / 43.0;
+    
+                                                rating = rating - 20;
+                                                </DriverShortTrackMin>
+  <DriverShortTrackMax>var rating = 0;
+                                                if(@raceStartsST == null)  
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - (@avgFinishST * 60.0) / 43.0;
+    
+                                                rating = rating + 0;
+                                                </DriverShortTrackMax>
+  <DriverSpeedwayMin>var rating = 0;
+                                                if(@raceStartsSW == null) 
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - (@avgFinishSW * 45.0) / 43.0;
+    
+                                                rating = rating - 20;
+                                                </DriverSpeedwayMin>
+  <DriverSpeedwayMax>var rating = 0;
+                                                if(@raceStartsSW == null) 
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - (@avgFinishSW * 60.0) / 43.0;
+    
+                                                rating = rating + 0;
+                                                </DriverSpeedwayMax>
+  <DriverSuperSpeedwayMin>var rating = 0;
+                                                if(@raceStartsSS == null) 
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - (@avgFinishSS * 45.0) / 43.0;
+    
+                                                rating = rating - 20;
+                                                </DriverSuperSpeedwayMin>
+  <DriverSuperSpeedwayMax>var rating = 0;
+                                                if(@raceStartsSS == null) 
+                                                    rating = 0;
+                                                else
+                                                    rating = 100.0 - ((@avgFinishSS * 60.0) / 43.0);
+    
+                                                rating = rating + 0;
+                                                </DriverSuperSpeedwayMax>
+  
+  <VehicleAeroMin>90 - (@avgFinish / 2) - @dnf</VehicleAeroMin>
+  <VehicleAeroMax>95 - (@avgFinish / 3)</VehicleAeroMax>
+  <VehicleChassisMin>70 - (@avgFinish / 1.3) - @dnf</VehicleChassisMin>
+  <VehicleChassisMax>80 - (@avgFinish / 1.8)</VehicleChassisMax>
+  <VehicleEngineMin>75 - (@avgFinish / 1.7) - @dnf</VehicleEngineMin>
+  <VehicleEngineMax>85 - (@avgFinish /2.5)</VehicleEngineMax>
+  <VehicleReliabilityMin>70 - (@avgFinish / 1.5) - @dnf</VehicleReliabilityMin>
+  <VehicleReliabilityMax>80 - (@avgFinish / 2.2)</VehicleReliabilityMax>
+  <PitcrewConsistencyMin>65</PitcrewConsistencyMin>
+  <PitcrewConsistencyMax>90</PitcrewConsistencyMax>
+  <PitcrewSpeedMin>70</PitcrewSpeedMin>
+  <PitcrewSpeedMax>95</PitcrewSpeedMax>
+  <PitcrewStrategyMin>60</PitcrewStrategyMin>
+  <PitcrewStrategyMax>100</PitcrewStrategyMax>
+</RatingsFormula>

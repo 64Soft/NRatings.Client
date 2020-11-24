@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<RatingsFormula xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>MasGrafx CUP Full Season</Name>
+  <Author>S10Man, modified by OmegaSeven</Author>
+<Version>v3.1</Version>
+<Description></Description>
+<Options>
+     <UseNr2003TrackTypes>true</UseNr2003TrackTypes>
+     <MappingMethod>NAME</MappingMethod>
+</Options>
+
+<DriverAggressionMin>
+    var rating = 0;
+    var ShoMax = 0;
+    var SpeMax = 0;
+    var SupMax = 0;
+    var FinMax = 100 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+    if(@avgFinishST != null)
+      ShoMax = 100 - (((@avgFinishST * @raceStartsST) + ((@countSelectedRacesST - @raceStartsST) * 48)) / @countSelectedRacesST);
+    else
+      ShoMax = 52;
+    if(@avgFinishSW != null)
+      SpeMax = 100 - (((@avgFinishSW * @raceStartsSW) + ((@countSelectedRacesSW - @raceStartsSW) * 48)) / @countSelectedRacesSW);
+    else
+      SpeMax = 52;
+    if(@avgFinishSS != null)
+      SupMax = 100 - ((((@avgFinishSS * @raceStartsSS) + ((@countSelectedRacesSS - @raceStartsSS) * 48)) / @countSelectedRacesSS) * 1.5);
+    else
+      SupMax = 28;
+    var ConMax = (ShoMax + SpeMax + SupMax) / 3;
+    rating = ((ConMax + FinMax) / 2) - 3;
+</DriverAggressionMin>
+<DriverAggressionMax>
+    var rating = 0;
+    var ShoMax = 0;
+    var SpeMax = 0;
+    var SupMax = 0;
+    var FinMax = 100 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+    if(@avgFinishST != null)
+      ShoMax = 100 - (((@avgFinishST * @raceStartsST) + ((@countSelectedRacesST - @raceStartsST) * 48)) / @countSelectedRacesST);
+    else
+      ShoMax = 52;
+    if(@avgFinishSW != null)
+      SpeMax = 100 - (((@avgFinishSW * @raceStartsSW) + ((@countSelectedRacesSW - @raceStartsSW) * 48)) / @countSelectedRacesSW);
+    else
+      SpeMax = 52;
+    if(@avgFinishSS != null)
+      SupMax = 100 - ((((@avgFinishSS * @raceStartsSS) + ((@countSelectedRacesSS - @raceStartsSS) * 48)) / @countSelectedRacesSS) * 1.5);
+    else
+      SupMax = 28;
+    var ConMax = (ShoMax + SpeMax + SupMax) / 3;
+    rating = ((ConMax + FinMax) / 2) + 7;
+</DriverAggressionMax>
+<DriverConsistencyMin>
+    var rating = 0;
+    var ShoMax = 0;
+    var SpeMax = 0;
+    var SupMax = 0;
+    if(@avgFinishST != null)
+      ShoMax = 100 - (((@avgFinishST * @raceStartsST) + ((@countSelectedRacesST - @raceStartsST) * 48)) / @countSelectedRacesST);
+    else
+      ShoMax = 52;
+    if(@avgFinishSW != null)
+      SpeMax = 100 - (((@avgFinishSW * @raceStartsSW) + ((@countSelectedRacesSW - @raceStartsSW) * 48)) / @countSelectedRacesSW);
+    else
+      SpeMax = 52;
+    if(@avgFinishSS != null)
+      SupMax = 100 - ((((@avgFinishSS * @raceStartsSS) + ((@countSelectedRacesSS - @raceStartsSS) * 48)) / @countSelectedRacesSS) * 1.5);
+    else
+      SupMax = 28;
+    rating = ((ShoMax + SpeMax + SupMax) / 3) - 10;
+</DriverConsistencyMin>
+<DriverConsistencyMax>
+    var rating = 0;
+    var ShoMax = 0;
+    var SpeMax = 0;
+    var SupMax = 0;
+    if(@avgFinishST != null)
+      ShoMax = 100 - (((@avgFinishST * @raceStartsST) + ((@countSelectedRacesST - @raceStartsST) * 48)) / @countSelectedRacesST);
+    else
+      ShoMax = 52;
+    if(@avgFinishSW != null)
+      SpeMax = 100 - (((@avgFinishSW * @raceStartsSW) + ((@countSelectedRacesSW - @raceStartsSW) * 48)) / @countSelectedRacesSW);
+    else
+      SpeMax = 52;
+    if(@avgFinishSS != null)
+      SupMax = 100 - ((((@avgFinishSS * @raceStartsSS) + ((@countSelectedRacesSS - @raceStartsSS) * 48)) / @countSelectedRacesSS) * 1.5);
+    else
+      SupMax = 28;
+    rating = (ShoMax + SpeMax + SupMax) / 3;
+</DriverConsistencyMax>
+<DriverFinishingMin>
+    var rating = 0;
+    rating = 90 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+</DriverFinishingMin>
+<DriverFinishingMax>
+    var rating = 0;
+    rating = 100 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+</DriverFinishingMax>
+<DriverQualifyingMin>
+    var rating = 0;
+    if(@raceStarts &lt; (@countSelectedRaces / 2))
+      rating = 35;
+    else
+      rating = 45;
+</DriverQualifyingMin>
+<DriverQualifyingMax>
+    var rating = 0;
+    rating = 100 - ((((@avgStart * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces) / 2);
+</DriverQualifyingMax>
+<DriverRoadCourseMin>
+    var rating = 0;
+    if(@avgFinishRC != null)
+      rating = 55 - ((((@avgFinishRC * @raceStartsRC) + ((@countSelectedRacesRC - @raceStartsRC) * 48)) / @countSelectedRacesRC) * 1.5);
+    else
+      rating = 0;
+</DriverRoadCourseMin>
+<DriverRoadCourseMax>
+    var rating = 0;
+    if(@avgFinishRC != null)
+      rating = 100 - ((((@avgFinishRC * @raceStartsRC) + ((@countSelectedRacesRC - @raceStartsRC) * 48)) / @countSelectedRacesRC) * 1.5);
+    else
+      rating = 28;
+</DriverRoadCourseMax>
+<DriverShortTrackMin>
+    var rating = 0;
+    if(@avgFinishST != null)
+      rating = 55 - (((@avgFinishST * @raceStartsST) + ((@countSelectedRacesST - @raceStartsST) * 48)) / @countSelectedRacesST);
+    else rating = 7;
+</DriverShortTrackMin>
+<DriverShortTrackMax>
+    var rating = 0;
+    if(@avgFinishST != null)
+      rating = 100 - (((@avgFinishST * @raceStartsST) + ((@countSelectedRacesST - @raceStartsST) * 48)) / @countSelectedRacesST);
+    else
+      rating = 52;
+</DriverShortTrackMax>
+<DriverSpeedwayMin>
+    var rating = 0;
+    if(@avgFinishSW != null)
+      rating = 55 - (((@avgFinishSW * @raceStartsSW) + ((@countSelectedRacesSW - @raceStartsSW) * 48)) / @countSelectedRacesSW);
+    else
+      rating = 7;
+</DriverSpeedwayMin>
+<DriverSpeedwayMax>
+    var rating = 0;
+    if(@avgFinishSW != null)
+      rating = 100 - (((@avgFinishSW * @raceStartsSW) + ((@countSelectedRacesSW - @raceStartsSW) * 48)) / @countSelectedRacesSW);
+    else
+      rating = 52;
+</DriverSpeedwayMax>
+<DriverSuperSpeedwayMin>
+    var rating = 0;
+    if(@avgFinishSS != null)
+      rating = 55 - ((((@avgFinishSS * @raceStartsSS) + ((@countSelectedRacesSS - @raceStartsSS) * 48)) / @countSelectedRacesSS) * 1.5);
+    else
+      rating = 0;
+</DriverSuperSpeedwayMin>
+<DriverSuperSpeedwayMax>
+    var rating = 0;
+    if(@avgFinishSS != null)
+      rating = 100 - ((((@avgFinishSS * @raceStartsSS) + ((@countSelectedRacesSS - @raceStartsSS) * 48)) / @countSelectedRacesSS) * 1.5);
+    else
+      rating = 28;
+</DriverSuperSpeedwayMax>
+
+<VehicleAeroMin>
+    var rating = 0;
+    rating = 80;
+</VehicleAeroMin>
+<VehicleAeroMax>
+    var rating = 0;
+    rating = 85;
+</VehicleAeroMax>
+<VehicleChassisMin>
+    var rating = 0;
+    if(@raceStarts &lt; (@countSelectedRaces / 2))
+      rating = 35;
+    else
+      rating = 45;
+</VehicleChassisMin>
+<VehicleChassisMax>
+    var rating = 0;
+    rating = 95-((((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces) * 1.3);
+</VehicleChassisMax>
+<VehicleEngineMin>
+    var rating = 0;
+    rating = 80-((((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces) * 1.3);
+</VehicleEngineMin>
+<VehicleEngineMax>
+    var rating = 0;
+    rating = 90-((((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces) * 1.3);
+</VehicleEngineMax>
+<VehicleReliabilityMin>
+    var rating = 0;
+    if(@raceStarts &lt; (@countSelectedRaces / 2))
+      rating = 35;
+    else rating = 45;
+</VehicleReliabilityMin>
+<VehicleReliabilityMax>
+    var rating = 0;
+    rating = 100-((((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces) * 1.3);
+</VehicleReliabilityMax>
+
+<PitcrewConsistencyMin>
+    var rating = 0;
+    if(@raceStarts &lt; (@countSelectedRaces / 2))
+      rating = 35;
+    else
+      rating = 45;
+    rating = rating + 25;
+</PitcrewConsistencyMin>
+<PitcrewConsistencyMax>
+    var rating = 0;
+    rating = 108 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+</PitcrewConsistencyMax>
+<PitcrewSpeedMin>
+    var rating = 0;
+    if(@raceStarts &lt; (@countSelectedRaces / 2))
+      rating = 35;
+    else
+      rating = 45;
+    rating = rating + 25;
+</PitcrewSpeedMin>
+<PitcrewSpeedMax>
+    var rating = 0;
+    rating = 104 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+</PitcrewSpeedMax>
+<PitcrewStrategyMin>
+    var rating = 0;
+    rating = 93 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+</PitcrewStrategyMin>
+<PitcrewStrategyMax>
+    var rating = 0;
+    rating = 108 - (((@avgFinish * @raceStarts) + ((@countSelectedRaces - @raceStarts) * 48)) / @countSelectedRaces);
+</PitcrewStrategyMax>
+
+</RatingsFormula>

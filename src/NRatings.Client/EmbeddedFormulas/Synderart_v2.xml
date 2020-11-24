@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<RatingsFormula xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Name>SnyderArt</Name>
+<Author>SnyderArt, optimized by Tjeuten</Author>
+<Version>v2.0</Version>
+<Description>For use with any field size.</Description>
+<Options>
+     <UseNr2003TrackTypes>false</UseNr2003TrackTypes>
+     <MappingMethod>NUMBER_AND_NAME</MappingMethod>
+</Options>
+<DriverAggressionMin>
+  var rating = 0;
+	if(@avgFinish != null)
+  {
+	  rating = 90.0 - (50.0 * @avgFinish / @avgNumberOfStarters);
+	  rating = rating - 5;
+  }
+	</DriverAggressionMin>
+<DriverAggressionMax>
+  var rating = 0;
+	if(@avgFinish != null)
+  {
+	  rating = 90.0 - (50.0 * @avgFinish / @avgNumberOfStarters);
+	  rating = rating + 5;
+  }
+</DriverAggressionMax>
+<DriverConsistencyMin>
+  var rating = 0;
+	if(@avgFinish != null)
+  {
+	  rating = 95.0 - (40.0 * @avgFinish / @avgNumberOfStarters);
+	  rating = rating - 5;
+  }
+</DriverConsistencyMin>
+<DriverConsistencyMax>
+  var rating = 0;
+	if(@avgFinish != null)
+  {
+	  rating = 95.0 - (40.0 * @avgFinish / @avgNumberOfStarters);
+	  rating = rating + 5;
+  }
+</DriverConsistencyMax>
+<DriverFinishingMin>
+  var rating = 0;
+	if(@avgFinish != null)
+  {
+	  rating = 95.0 - (30.0 * @avgFinish / @avgNumberOfStarters);
+	  rating = rating - 5;
+  }
+</DriverFinishingMin>
+<DriverFinishingMax>
+  var rating = 0;
+	if(@avgFinish != null)
+  {
+	  rating = 95.0 - (30.0 * @avgFinish / @avgNumberOfStarters);
+	  rating = rating + 5;
+  }
+</DriverFinishingMax>
+<DriverQualifyingMin>
+  var rating = 0;
+	if(@avgStart != null)
+  {
+	  rating = 95.0 - (80.0 * @avgStart / @avgNumberOfStarters);
+	  rating = rating - 5;
+  }
+  else
+    rating = 40;
+</DriverQualifyingMin>
+<DriverQualifyingMax>
+  var rating = 0;
+	if(@avgStart != null)
+  {
+	  rating = 95.0 - (80.0 * @avgStart / @avgNumberOfStarters);
+	  rating = rating + 5;
+  }
+  else
+    rating = 60;
+</DriverQualifyingMax>
+<DriverRoadCourseMin>
+  var rating = 0;
+	if(@avgFinishRC != null)
+	  rating = 60.0 - (15.0 * @avgFinishRC / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating - 5;
+</DriverRoadCourseMin>
+<DriverRoadCourseMax>
+  var rating = 0;
+	if(@avgFinishRC != null)
+	  rating = 60.0 - (15.0 * @avgFinishRC / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating + 5;
+</DriverRoadCourseMax>
+<DriverShortTrackMin>
+  var rating = 0;
+	if(@avgFinishST != null)
+	  rating = 60.0 - (15.0 * @avgFinishST / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating - 5;
+</DriverShortTrackMin>
+<DriverShortTrackMax>
+  var rating = 0;
+	if(@avgFinishST != null)
+	  rating = 60.0 - (15.0 * @avgFinishST / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating + 5;
+</DriverShortTrackMax>
+<DriverSpeedwayMin>
+  var rating = 0;
+	if(@raceStartsSW != null)
+	  rating = 60.0 - (15.0 * @avgFinishSW / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating - 5;
+</DriverSpeedwayMin>
+<DriverSpeedwayMax>
+  var rating = 0;
+	if(@raceStartsSW != null)
+	  rating = 60.0 - (15.0 * @avgFinishSW / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating + 5;
+</DriverSpeedwayMax>
+<DriverSuperSpeedwayMin>
+  var rating = 0;
+	if(@avgFinishSS != null)
+	  rating = 60.0 - (15.0 * @avgFinishSS / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating - 5;
+</DriverSuperSpeedwayMin>
+<DriverSuperSpeedwayMax>
+  var rating = 0;
+	if(@avgFinishSS != null)
+	  rating = 60.0 - (15.0 * @avgFinishSS / @avgNumberOfStarters);
+	else
+    rating = 25;
+	rating = rating + 5;
+</DriverSuperSpeedwayMax>
+<VehicleAeroMin>
+  var rating = 0;
+	if(@avgFinishSS != null &amp;&amp; @avgFinishSW != null)
+	  rating = 80.0 - ((@avgFinishSS * 20.0 / @avgNumberOfStarters) + (@avgFinishSW * 20.0 / @avgNumberOfStarters) / 2.0);
+	else
+    rating = 80.0 - (@avgFinish * 20.0 / @avgNumberOfStarters);
+	rating = rating - 5;
+</VehicleAeroMin>
+<VehicleAeroMax>
+  var rating = 0;
+  if(@avgFinishSS != null &amp;&amp; @avgFinishSW != null)
+    rating = 80.0 - ((@avgFinishSS * 20.0 / @avgNumberOfStarters) + (@avgFinishSW * 20.0 / @avgNumberOfStarters) / 2.0);
+  else
+    rating = 80.0 - (@avgFinish * 20.0 / @avgNumberOfStarters);
+  rating = rating + 5;
+</VehicleAeroMax>
+<VehicleChassisMin>
+  var rating = 0;
+  if(@avgFinishST != null &amp;&amp; @avgFinishRC != null)
+    rating = 80.0 - ((@avgFinishST * 20.0 / @avgNumberOfStarters) + (@avgFinishRC * 20.0 / @avgNumberOfStarters) / 2.0);
+  else
+    rating = 80.0 - (@avgFinish * 20.0 / @avgNumberOfStarters);
+  rating = rating - 5;
+</VehicleChassisMin>
+<VehicleChassisMax>
+  var rating = 0;
+	if(@avgFinish != null)
+	rating = 80.0 - ((@avgFinishST * 20.0 / @avgNumberOfStarters) + (@avgFinishRC * 20.0 / @avgNumberOfStarters) / 2.0);
+	else rating = 80.0 - ((@avgFinishST * 20.0 / @avgNumberOfStarters) + (@avgFinishRC * 20.0 / @avgNumberOfStarters) / 2.0);
+	rating = rating + 5;
+</VehicleChassisMax>
+<VehicleEngineMin>
+  var rating = 0;
+  if(@avgFinishST != null &amp;&amp; @avgFinishRC != null &amp;&amp; @avgFinishSW != null)
+    rating = 80.0 - ((@avgFinishST * 20.0 / @avgNumberOfStarters) + (@avgFinishRC * 20.0 / @avgNumberOfStarters) + (@avgFinishSW * 20.0 / @avgNumberOfStarters) / 3.0);
+  else
+   rating = 80.0 - (@avgFinish * 20.0 / @avgNumberOfStarters);
+  rating = rating - 5;
+</VehicleEngineMin>
+<VehicleEngineMax>
+  var rating = 0;
+  if(@avgFinishST != null &amp;&amp; @avgFinishRC != null &amp;&amp; @avgFinishSW != null)
+    rating = 80.0 - ((@avgFinishST * 20.0 / @avgNumberOfStarters) + (@avgFinishRC * 20.0 / @avgNumberOfStarters) + (@avgFinishSW * 20.0 / @avgNumberOfStarters) / 3.0);
+  else
+    rating = 80.0 - (@avgFinish * 20.0 / @avgNumberOfStarters);
+  rating = rating + 5;
+</VehicleEngineMax>
+<VehicleReliabilityMin>
+  var rating = 0;
+	rating = 95.0 - (90.0 * @dnf / @raceStarts);
+	rating = rating - 5;
+</VehicleReliabilityMin>
+<VehicleReliabilityMax>
+  var rating = 0;
+	rating = 95.0 - (90.0 * @dnf / @raceStarts);
+	rating = rating + 5;
+</VehicleReliabilityMax>
+<PitcrewConsistencyMin>
+	80
+</PitcrewConsistencyMin>
+<PitcrewConsistencyMax>
+	90
+</PitcrewConsistencyMax>
+<PitcrewSpeedMin>
+	90
+</PitcrewSpeedMin>
+<PitcrewSpeedMax>
+	100
+</PitcrewSpeedMax>
+<PitcrewStrategyMin>
+	85
+</PitcrewStrategyMin>
+<PitcrewStrategyMax>
+	95
+</PitcrewStrategyMax>
+</RatingsFormula>

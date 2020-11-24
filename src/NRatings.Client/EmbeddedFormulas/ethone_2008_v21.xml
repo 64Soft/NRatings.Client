@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<RatingsFormula xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Ethone's 2008 Formula</Name>
+  <Author>Dennis Grebe</Author>
+  <Version>v2.1</Version>
+  <Description>Formula set mainly for full or partial seasons. Rates non-startes lower than frequent starters.</Description>
+  <Options>
+  <UseNr2003TrackTypes>true</UseNr2003TrackTypes>
+  <MappingMethod>NAME</MappingMethod>
+  </Options>
+  <DriverAggressionMin>40 + (100 * @wins/@raceStarts + (100 * @top5/@raceStarts) + (200 * (@dnfCrash/@raceStarts) + 200 * (@avgStart - @avgFinish) /43) + 200 * @percLapsLed)/8</DriverAggressionMin>
+  <DriverAggressionMax>60 + (100 * @wins/@raceStarts + (100 * @top5/@raceStarts) + (200 * (@dnfCrash/@raceStarts) + 200 * (@avgStart - @avgFinish) /43) + 200 * @percLapsLed)/8</DriverAggressionMax>
+  <DriverConsistencyMin>60-30*(@avgFinish/43)-10*(@dnfCrash/@countSelectedRaces)+10*@percLapsCompleted</DriverConsistencyMin>
+  <DriverConsistencyMax>90-30*(@avgFinish/43)-10*(@dnfCrash/@countSelectedRaces)+10*@percLapsCompleted</DriverConsistencyMax>
+  <DriverFinishingMin>((25.0 * @wins / @raceStarts) + (50.0 * @top5 / @raceStarts) + (100.0 * @top10 / @raceStarts) / 3.0) + 50.0</DriverFinishingMin>
+  <DriverFinishingMax>((25.0 * @wins / @raceStarts) + (50.0 * @top5 / @raceStarts) + (100.0 * @top10 / @raceStarts) / 3.0) + 70.0</DriverFinishingMax>
+  <DriverQualifyingMin>80-(@avgStart * 50.0 / 43.0)</DriverQualifyingMin>
+  <DriverQualifyingMax>100-(@avgStart * 15.0 / 43.0)</DriverQualifyingMax>
+   
+  <DriverRoadCourseMin>var rating = 0;
+                                                if(@avgFinishRC != null) 
+                                                    rating = 60.0 - ((80.0 * @avgFinishRC / 43.0)+(20.0 * @avgStartRC / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating - 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverRoadCourseMin>
+  <DriverRoadCourseMax>var rating = 0;
+                                                if(@avgFinishRC != null) 
+                                                    rating = 60.0 - ((80.0 * @avgFinishRC / 43.0)+(20.0 * @avgStartRC / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating + 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverRoadCourseMax>
+  <DriverShortTrackMin>var rating = 0;
+                                                if(@avgFinishST != null) 
+                                                    rating = 60.0 - ((80.0 * @avgFinishST  / 43.0)+(20.0 * @avgStartST / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating - 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverShortTrackMin>
+  <DriverShortTrackMax>var rating = 0;
+                                                if(@avgFinishST != null) 
+                                                    rating = 60.0 - ((80.0 * @avgFinishST / 43.0)+(20.0 * @avgStartST / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating + 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverShortTrackMax>
+  <DriverSpeedwayMin>var rating = 0;
+                                                if(@avgFinishSW != null) 
+                                                    rating = 60.0 - ((@avgFinishSW * 80.0 / 43.0)+(20.0 * @avgStartSW / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating - 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverSpeedwayMin>
+  <DriverSpeedwayMax>var rating = 0;
+                                                if(@avgFinishSW != null) 
+                                                    rating = 60.0 - ((@avgFinishSW * 80.0 / 43.0)+(20.0 * @avgStartSW / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating + 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverSpeedwayMax>
+  <DriverSuperSpeedwayMin>var rating = 0;
+                                                if(@avgFinishSS != null) 
+                                                    rating = 60.0 - ((@avgFinishSS * 80.0 / 43.0)+(20.0 * @avgStartSS / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating - 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverSuperSpeedwayMin>
+  <DriverSuperSpeedwayMax>var rating = 0;
+                                                if(@avgFinishSS != null) 
+                                                    rating = 60.0 - ((@avgFinishSS * 80.0 / 43.0)+(20.0 * @avgStartSS / 43.0))/2;
+                                                else
+                                                    rating = 40.0 - (@avgFinish * 100.0) / 43.0;
+    
+                                                rating = rating + 5 + (@raceStarts/@countSelectedRaces)*40;
+                                                </DriverSuperSpeedwayMax>
+  <VehicleAeroMin>var rating = 0;
+                                                if(@avgFinishSS != null) 
+                                                      rating = 80-((@avgFinishSS/43*20)+(@avgStartSS/43*5))/2;
+                                                else
+                                                    rating = 80.0-(@avgFinish*25.0)/43.0;
+                                                </VehicleAeroMin>
+  <VehicleAeroMax>85</VehicleAeroMax>
+  <VehicleChassisMin>var rating = 0;
+                                                if(@avgFinishST != null) 
+                                                      rating = 80 - (@avgFinishST/43*3) - (@avgFinishRC/43*3) - (@avgFinishSW/43*3) - (@avgStartST/43*2) - (@avgStartRC/43*2) - (@avgStartSW/43*2);
+                                                else
+                                                    rating = 80.0-(@avgFinish*25.0)/43.0;</VehicleChassisMin>
+  <VehicleChassisMax>85</VehicleChassisMax>
+  <VehicleEngineMin>var rating = 0;
+                                                if(@avgFinishSS != null) 
+                                                      rating = 80-(@avgFinishSS/43*10)-(@avgStartSS/43*2.5);
+                                                else
+                                                    rating = 80.0-(@avgFinish*25.0)/43.0;
+                                                </VehicleEngineMin>
+  <VehicleEngineMax>85</VehicleEngineMax>
+  <VehicleReliabilityMin>80.0 - (@dnfMechanical * 100.0 / @raceStarts)</VehicleReliabilityMin>
+  <VehicleReliabilityMax>85</VehicleReliabilityMax>
+  <PitcrewConsistencyMin>80</PitcrewConsistencyMin>
+  <PitcrewConsistencyMax>100</PitcrewConsistencyMax>
+  <PitcrewSpeedMin>80</PitcrewSpeedMin>
+  <PitcrewSpeedMax>100</PitcrewSpeedMax>
+  <PitcrewStrategyMin>80</PitcrewStrategyMin>
+  <PitcrewStrategyMax>100</PitcrewStrategyMax>
+</RatingsFormula>
