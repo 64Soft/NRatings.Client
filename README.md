@@ -19,3 +19,13 @@ Following functionalities are offered:
 - A Windows based PC with Windows 7 SP1, Windows 8.1 or Windows 10 (recommended)
 - Of course, the game NASCAR Racing 2003 Season itself
 - The Microsoft .NET Framework 4.7.2 or higher
+
+## Credits
+
+- https://racing-reference.info for providing the racing stats
+- Following authors for providing the formulas that come embedded with the application:
+  - MasGrafx (S10Man / OmegaSeven)
+  - Dennis Grebe
+  - Pbfoot
+  - Snyderart
+  - Rupe
