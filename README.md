@@ -22,7 +22,7 @@ Following functionalities are offered:
 
 ## Credits
 
-NRatings couldn't exist without conbribution from these individuals and communities:
+NRatings couldn't exist without contribution from these individuals and communities:
 
 - https://racing-reference.info for providing the racing stats
 - Following authors for providing the formulas that come embedded with the application:
