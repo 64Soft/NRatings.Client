@@ -352,7 +352,6 @@
     </None>
     <None Include="App.Release.Config">
       <DependentUpon>App.Config</DependentUpon>
-      <TransformOnBuild>true</TransformOnBuild>
       <IsTransformFile>true</IsTransformFile>
     </None>
     <None Include="Properties\app.manifest" />
