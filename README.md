@@ -31,3 +31,7 @@ NRatings couldn't exist without contribution from these individuals and communit
   - Pbfoot
   - Snyderart
   - Rupe
+
+## Download
+
+A download link to the latest NRatings release will be posted here shortly. Keep checking back.
