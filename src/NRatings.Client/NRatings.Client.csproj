@@ -21,10 +21,10 @@
     <SignAssembly>false</SignAssembly>
     <ManifestCertificateThumbprint>35BC08DB20CD1FFF8DD4DC78A3E9943E2A8B0D37</ManifestCertificateThumbprint>
     <ManifestKeyFile>NRatings_TemporaryKey.pfx</ManifestKeyFile>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
     <TargetZone>Internet</TargetZone>
     <SignManifests>false</SignManifests>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
@@ -38,9 +38,9 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>D:\Deploy\NRatings\Client\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
+    <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
@@ -48,6 +48,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>https://nratings.heliohost.org/download/client/</InstallUrl>
     <SupportUrl>https://github.com/64Soft/NRatings.Client</SupportUrl>
     <ProductName>NRatings</ProductName>
     <PublisherName>64Soft</PublisherName>
@@ -89,6 +90,9 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="JPackage">
       <HintPath>..\..\lib\JPackage\JPackage.dll</HintPath>
@@ -352,6 +356,7 @@
       <DependentUpon>App.Config</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
     </None>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -455,7 +460,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reactor_Enabled="0" Reactor_Lib="0" Reactor_Automatic="1" Reactor_Commands="" Reactor_Project="" Reactor_Output="[main_assembly_dir]NRatings_Secure\NRatings.exe" BuildVersion_UpdateAssemblyVersion="False" BuildVersion_UpdateFileVersion="False" BuildVersion_BuildVersioningStyle="None.None.None.None" BuildVersion_UseGlobalSettings="False" />
+      <UserProperties BuildVersion_UseGlobalSettings="False" BuildVersion_BuildVersioningStyle="None.None.None.None" BuildVersion_UpdateFileVersion="False" BuildVersion_UpdateAssemblyVersion="False" Reactor_Output="[main_assembly_dir]NRatings_Secure\NRatings.exe" Reactor_Project="" Reactor_Commands="" Reactor_Automatic="1" Reactor_Lib="0" Reactor_Enabled="0" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
