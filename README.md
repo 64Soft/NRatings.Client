@@ -34,4 +34,10 @@ NRatings couldn't exist without contribution from these individuals and communit
 
 ## Download
 
-A download link to the latest NRatings release will be posted here shortly. Keep checking back.
+[Click here to download the latest executable version](https://nratings.heliohost.org/download/client/NRatings.Client.application)
+
+### IMPORTANT: if you still have a version prior to v5.0.0 of NRatings installed on your machine, you should probably first uninstall it (via Windows "Add or remove programs") just to be on the safe side...
+
+The deployment is using the Microsoft ClickOnce technology. At every application startup, it should automatically check if a new version is available, and update it automatically if that's the case.
+
+For release notes and other assets associated with each release, check the releases tab of this project.
