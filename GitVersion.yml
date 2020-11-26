@@ -1,0 +1,7 @@
+next-version: 5.0.0
+mode: ContinuousDelivery
+assembly-informational-format: '{MajorMinorPatch}'
+branches: {}
+ignore:
+  sha: []
+merge-message-formats: {}
