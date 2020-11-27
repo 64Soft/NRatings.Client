@@ -25,6 +25,7 @@ Following functionalities are offered:
 NRatings couldn't exist without contribution from these individuals and communities:
 
 - https://racing-reference.info for providing the racing stats
+- https://www.heliohost.org for providing the free hosting space for the backend. Please seriously consider donating to these guys if you like NRatings and use it often
 - Following authors for providing the formulas that come embedded with the application:
   - MasGrafx (S10Man / OmegaSeven)
   - Dennis Grebe
