@@ -6,8 +6,8 @@ namespace NRatings.Client.Domain
     {
         private static readonly List<string> variableList = new List<string>
                                                    {
-                                                            "@avgFinish",
                                                             "@avgFinishExcludingDnf",
+                                                            "@avgFinish",
                                                             "@avgStart",
                                                             "@bestFinish",
                                                             "@bestStart",
