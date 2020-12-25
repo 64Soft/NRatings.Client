@@ -9,7 +9,7 @@ using NRatings.Client.GUI;
 namespace NRatings.Client.Domain
 {
     [Serializable]
-    public class UserSettings : ICloneable
+    public class UserSettings
     {
         private static string filePath = Path.Combine(UserSettingsManager.GetSettingsPath(), @"usersettings.xml");
 
@@ -34,7 +34,7 @@ namespace NRatings.Client.Domain
             this.Save();
         }
 
-        public void ClearAccessToken(bool persist = true)
+        public void ClearAccessToken()
         {
             this.AccesToken = null;
             this.AccessTokenExpiration = null;
@@ -101,18 +101,5 @@ namespace NRatings.Client.Domain
             }
 
         }
-
-
-        #region ICloneable Members
-
-        public object Clone()
-        {
-            UserSettings clone = Helper.Clone<UserSettings>(this);
-            return clone;
-        }
-
-        #endregion
-
-        
     }
 }

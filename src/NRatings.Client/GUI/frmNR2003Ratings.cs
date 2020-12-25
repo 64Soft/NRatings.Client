@@ -164,11 +164,8 @@ namespace NRatings.Client.GUI
                 this.selectedNR2003Instance = null;
                 this.selectedMod = null;
                 this.selectedRoster = null;
-                
 
-                this.bsNR2003Instances.Clear();
-
-
+                this.bsNR2003Instances.DataSource = new List<NR2003Instance>(); //needed to reinitialize the list for the dropdowns to rebind correctly
                 this.bsNR2003Instances.DataSource = Program.UserSettings.NR2003Instances;
 
                 if (Program.UserSettings.NR2003Instances != null && Program.UserSettings.NR2003Instances.Count > 0)
@@ -186,10 +183,8 @@ namespace NRatings.Client.GUI
                     else
                         defaultInstance = Program.UserSettings.NR2003Instances.First();
 
-
                     this.cmbNR2003Instance.SelectedItem = defaultInstance;
 
-                    
                 }
 
                 this.LoadCarList();
@@ -213,6 +208,7 @@ namespace NRatings.Client.GUI
             }
         }
 
+        
         private void bsNR2003Instances_CurrentChanged(object sender, EventArgs e)
         {
             NR2003Instance instance = this.cmbNR2003Instance.SelectedItem as NR2003Instance;
@@ -227,9 +223,8 @@ namespace NRatings.Client.GUI
                 }
 
                 this.LoadMods();
-              
-            }
 
+            }
         }
 
         private void bsMods_CurrentChanged(object sender, EventArgs e)
@@ -1131,13 +1126,11 @@ namespace NRatings.Client.GUI
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UserSettings userSettings = (UserSettings)Program.UserSettings.Clone();
-            frmUserSettings fUserSettings = new frmUserSettings(userSettings);
+            frmUserSettings fUserSettings = new frmUserSettings();
             DialogResult dres = fUserSettings.ShowDialog();
         
             if (dres == DialogResult.OK)
             {
-                Program.UserSettings = fUserSettings.UserSettings;
                 this.LoadNR2003Instances();
             }
         }
@@ -1250,5 +1243,6 @@ namespace NRatings.Client.GUI
 
         #endregion
 
+        
     }
 }

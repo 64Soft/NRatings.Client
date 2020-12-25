@@ -16,25 +16,15 @@ namespace NRatings.Client.GUI
         private int browseColumnIndex = 2;
         private int defaultColumnIndex = 3;
         private bool currentDefaultValue;
-        private UserSettings userSettings;
-
-        private bool settingsSaved = false;
-
-        public UserSettings UserSettings
-        {
-            get { return this.userSettings; }
-        }
         
-        public frmUserSettings(UserSettings userSettings)
+        public frmUserSettings()
         {
             
             InitializeComponent();
 
-            this.userSettings = userSettings;
-
             Task.Run(SetUserInfoAsync).Wait();
 
-            this.bsUserSettings.DataSource = userSettings;
+            this.bsUserSettings.DataSource = Program.UserSettings;
 
             string registryPath = this.ReadNR2003PathFromRegistry();
 
@@ -46,7 +36,7 @@ namespace NRatings.Client.GUI
                 instance.Name = registryPath;
                 instance.Path = registryPath;
 
-                if (this.userSettings.NR2003Instances.Count == 0)
+                if (Program.UserSettings.NR2003Instances.Count == 0)
                     instance.IsDefault = true;
                 else
                     instance.IsDefault = false;
@@ -106,7 +96,7 @@ namespace NRatings.Client.GUI
         {
             if (path != null)
             {
-                var q = (from i in this.userSettings.NR2003Instances
+                var q = (from i in Program.UserSettings.NR2003Instances
                          where i.Path.Equals(path)
                          select i).Count();
 
@@ -132,10 +122,10 @@ namespace NRatings.Client.GUI
         {
             List<string> messages = new List<string>();
 
-            if (this.userSettings.NR2003Instances.Count() > 0)
+            if (Program.UserSettings.NR2003Instances.Count() > 0)
             {
             
-                var q = (from i in this.userSettings.NR2003Instances
+                var q = (from i in Program.UserSettings.NR2003Instances
                             where i.Name == null || i.Path == null
                             select i).Count();
 
@@ -144,16 +134,16 @@ namespace NRatings.Client.GUI
                     messages.Add("You need to provide a name and a path for each NR2003 instance.");
                 }
 
-                var q2 = (from i in this.userSettings.NR2003Instances
+                var q2 = (from i in Program.UserSettings.NR2003Instances
                           select i.Name).Distinct();
 
-                if (q2.Count() < this.userSettings.NR2003Instances.Count())
+                if (q2.Count() < Program.UserSettings.NR2003Instances.Count())
                 {
                     messages.Add("Instances must have unique names.");
                 }
 
 
-                var q4 = (from i in this.userSettings.NR2003Instances
+                var q4 = (from i in Program.UserSettings.NR2003Instances
                             where i.IsDefault == true
                             select i).Count();
 
@@ -184,7 +174,7 @@ namespace NRatings.Client.GUI
 
         private void dgNR2003Instances_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            var q = (from i in this.userSettings.NR2003Instances
+            var q = (from i in Program.UserSettings.NR2003Instances
                      where i.IsDefault == true
                      select i).Count();
 
@@ -274,34 +264,22 @@ namespace NRatings.Client.GUI
             }
         }
 
-        private void SaveChanges()
+        private void butClose_Click(object sender, EventArgs e)
         {
-            if (this.ValidateSettings())
-            {
-                this.userSettings.Save();
-                this.DialogResult = DialogResult.OK;
-                this.settingsSaved = true;
-            }
-        }
-
-        private void butOK_Click(object sender, EventArgs e)
-        {
-            this.SaveChanges();
             this.Close();
         }
 
         private void frmUserSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!this.settingsSaved)
+            if (this.ValidateSettings())
             {
-                var result = MessageBox.Show(@"Quit settings dialog without saving ?", "Closing settings", MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question);
-
-                if (result == DialogResult.No)
-                {
-                    e.Cancel = true;
-                } 
-            } 
+                Program.UserSettings.Save();
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
 
         private async void butLogin_Click(object sender, EventArgs e)
