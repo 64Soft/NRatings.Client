@@ -51,7 +51,6 @@ namespace NRatings.Client.GUI
             //SUBSCRIBE TO THE SELECTEDRACES CHANGED EVENT
             this.rdp.SelectedRacesChanged += new EventHandler(rdp_SelectedRacesChanged);
 
-            
         }
   
         private void rdp_SelectedRacesChanged(object sender, EventArgs e)
@@ -94,14 +93,14 @@ namespace NRatings.Client.GUI
 
 
             //SELECT THE DEFAULT FORMULA
-            if (Program.userSettings.DefaultFormula != null)
+            if (Program.UserSettings.DefaultFormula != null)
             {
                 bool defaultFound = false;
                 foreach (RatingsFormula r in rfc)
                 {
                     if (defaultFound == false)
                     {
-                        if (r.FileName == Program.userSettings.DefaultFormula)
+                        if (r.FileName == Program.UserSettings.DefaultFormula)
                         {
                             this.rfsRatingsFormula.SelectedFormula = r;
                             defaultFound = true;

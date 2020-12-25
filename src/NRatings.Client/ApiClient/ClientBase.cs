@@ -4,7 +4,7 @@ namespace NRatings.Client.ApiClient
 {
     public abstract class ClientBase
     {
-        protected APIClientSettings settings;
+        private APIClientSettings settings;
 
         protected ClientBase(APIClientSettings settings)
         {
@@ -14,6 +14,7 @@ namespace NRatings.Client.ApiClient
         protected IFlurlRequest GetApiFlurlRequest()
         {
             var request = new FlurlRequest(this.settings.ApiBaseUri);
+            request.WithOAuthBearerToken(Program.UserSettings.AccesToken);
 
             return request;
         }
