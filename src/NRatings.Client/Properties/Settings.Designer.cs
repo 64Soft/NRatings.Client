@@ -22,14 +22,5 @@ namespace NRatings.Client.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://localhost:5001")]
-        public string ApiBaseUri {
-            get {
-                return ((string)(this["ApiBaseUri"]));
-            }
-        }
     }
 }

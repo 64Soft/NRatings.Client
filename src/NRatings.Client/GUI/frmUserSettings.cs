@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using NRatings.Client.Domain;
@@ -31,6 +31,9 @@ namespace NRatings.Client.GUI
             InitializeComponent();
 
             this.userSettings = userSettings;
+
+            Task.Run(SetUserInfoAsync).Wait();
+
             this.bsUserSettings.DataSource = userSettings;
 
             string registryPath = this.ReadNR2003PathFromRegistry();
@@ -51,6 +54,22 @@ namespace NRatings.Client.GUI
                 this.bsNR2003Instances.Add(instance);
             }
 
+        }
+
+        private async Task SetUserInfoAsync()
+        {
+            this.txtUserInfo.Text = await UserManager.GetUserInfoStringAsync(Environment.NewLine);
+
+            if (await UserManager.IsLoggedInAsync())
+            {
+                this.butLogin.Enabled = false;
+                this.butLogout.Enabled = true;
+            }
+            else
+            {
+                this.butLogin.Enabled = true;
+                this.butLogout.Enabled = false;
+            }
         }
 
         private string ReadNR2003PathFromRegistry()
@@ -285,5 +304,23 @@ namespace NRatings.Client.GUI
             } 
         }
 
+        private async void butLogin_Click(object sender, EventArgs e)
+        {
+            await UserManager.LoginAsync();
+
+            var result = await UserManager.LoginAsync();
+            if (!result.Succeeded)
+            {
+                MessageBox.Show(result.Error, "Login unsuccessful", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            await SetUserInfoAsync();
+        }
+
+        private async void butLogout_Click(object sender, EventArgs e)
+        {
+            await UserManager.LogOutAsync();
+            await SetUserInfoAsync();
+        }
     }
 }

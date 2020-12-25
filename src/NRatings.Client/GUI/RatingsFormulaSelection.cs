@@ -95,8 +95,8 @@ namespace NRatings.Client.GUI
 
         private void butSetDefault_Click(object sender, EventArgs e)
         {
-            Program.userSettings.DefaultFormula = this.SelectedFormula.FileName;
-            Program.userSettings.Save();
+            Program.UserSettings.DefaultFormula = this.SelectedFormula.FileName;
+            Program.UserSettings.Save();
 
             MessageBox.Show("Default formula set to " + this.SelectedFormula.Name, "Default set", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

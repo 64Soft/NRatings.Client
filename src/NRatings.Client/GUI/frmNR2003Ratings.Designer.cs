@@ -295,19 +295,19 @@ namespace NRatings.Client.GUI
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(169, 6);
             // 
             // visitProjectHomeToolStripMenuItem
             // 
             this.visitProjectHomeToolStripMenuItem.Name = "visitProjectHomeToolStripMenuItem";
-            this.visitProjectHomeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.visitProjectHomeToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.visitProjectHomeToolStripMenuItem.Text = "Visit Project Home";
             this.visitProjectHomeToolStripMenuItem.Click += new System.EventHandler(this.visitProjectHomeToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
