@@ -1241,8 +1241,23 @@ namespace NRatings.Client.GUI
 
 
 
+
         #endregion
 
-        
+        #region Links
+
+        private void lnkDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://paypal.me/64racer");
+        }
+
+        private void lnkTwitch_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://twitch.tv/64racer");
+        }
+
+        #endregion
+
+
     }
 }
