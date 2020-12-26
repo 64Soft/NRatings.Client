@@ -37,7 +37,9 @@ NRatings couldn't exist without contribution from these individuals and communit
 
 [Click here to download the latest executable version](https://nratings.heliohost.org/download/client/NRatings.Client.application)
 
-### IMPORTANT: if you still have a version prior to v5.0.0 of NRatings installed on your machine, you should probably first uninstall it (via Windows "Add or remove programs") just to be on the safe side...
+Since v5.1.0, it is now again required to log in when you want to use the real life racing data feature. This was re-introduced to protect the backend racing data API from being abused. The signup/login process is now however completely integrated in the application itself, and you can use social logins. However please note that earlier accounts (pre v5) will no longer work. You'll need to sign up for a new one, but you can reuse the same email address you used for the pre v5 version. However you are encouraged to use one of the social login options presented to you in the login screen. 
+
+### IMPORTANT: if you still have a version prior to v5.0.0 of NRatings installed on your machine, first uninstall it (via Windows "Add or remove programs") before installing the newest version from here.
 
 The deployment is using the Microsoft ClickOnce technology. At every application startup, it should automatically check if a new version is available, and update it automatically if that's the case.
 
