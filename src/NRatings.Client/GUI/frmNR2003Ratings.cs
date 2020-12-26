@@ -60,6 +60,8 @@ namespace NRatings.Client.GUI
 
         }
 
+        
+
         private void mainProc_MessageRaised(object sender, EventArgs<Message> e)
         {
             switch(e.ArgObject.Type)
@@ -101,7 +103,7 @@ namespace NRatings.Client.GUI
 
             this.Text = this.Text + " " + version  + "   " + platform;
 
-            if (Program.userSettings.NR2003Instances == null || Program.userSettings.NR2003Instances.Count == 0)
+            if (Program.UserSettings.NR2003Instances == null || Program.UserSettings.NR2003Instances.Count == 0)
             {
                 MessageBox.Show("There are no NR2003 instances defined. You should go to \"Tools - Options\" and add at least one NR2003 instance.", "No NR2003 instances found", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -162,19 +164,16 @@ namespace NRatings.Client.GUI
                 this.selectedNR2003Instance = null;
                 this.selectedMod = null;
                 this.selectedRoster = null;
-                
 
-                this.bsNR2003Instances.Clear();
+                this.bsNR2003Instances.DataSource = new List<NR2003Instance>(); //needed to reinitialize the list for the dropdowns to rebind correctly
+                this.bsNR2003Instances.DataSource = Program.UserSettings.NR2003Instances;
 
-
-                this.bsNR2003Instances.DataSource = Program.userSettings.NR2003Instances;
-
-                if (Program.userSettings.NR2003Instances != null && Program.userSettings.NR2003Instances.Count > 0)
+                if (Program.UserSettings.NR2003Instances != null && Program.UserSettings.NR2003Instances.Count > 0)
                 {
 
                     NR2003Instance defaultInstance;
 
-                    var q = (from i in Program.userSettings.NR2003Instances
+                    var q = (from i in Program.UserSettings.NR2003Instances
                              where i.IsDefault == true
                              select i).First();
 
@@ -182,12 +181,10 @@ namespace NRatings.Client.GUI
                     if (q != null)
                         defaultInstance = q;
                     else
-                        defaultInstance = Program.userSettings.NR2003Instances.First();
-
+                        defaultInstance = Program.UserSettings.NR2003Instances.First();
 
                     this.cmbNR2003Instance.SelectedItem = defaultInstance;
 
-                    
                 }
 
                 this.LoadCarList();
@@ -211,6 +208,7 @@ namespace NRatings.Client.GUI
             }
         }
 
+        
         private void bsNR2003Instances_CurrentChanged(object sender, EventArgs e)
         {
             NR2003Instance instance = this.cmbNR2003Instance.SelectedItem as NR2003Instance;
@@ -225,9 +223,8 @@ namespace NRatings.Client.GUI
                 }
 
                 this.LoadMods();
-              
-            }
 
+            }
         }
 
         private void bsMods_CurrentChanged(object sender, EventArgs e)
@@ -972,47 +969,61 @@ namespace NRatings.Client.GUI
             }
 
 
-            if (showImportDialog == true)
+            if (showImportDialog)
             {
-                frmGetRealData fRealData = new frmGetRealData();
-                DialogResult dres = fRealData.ShowDialog();
-                if (dres == DialogResult.OK)
+                var result = await UserManager.LoginAsync();
+                if (!result.Succeeded)
                 {
-                    ////START FROM A BLANK CARLIST
-                    //this.colCars.IsDirty = false; //set to false to avoid confirmation dialog
-                    //this.LoadCarList();
-
-
-                    RealDriverCollection RealDrivers = fRealData.RealDrivers;
-
-                    CarMappingMethod mappingMethod = fRealData.MappingMethod;
-                    bool rosterOnly = fRealData.CarListOnly;
-
-                    //IF THE "ROSTER ONLY" CHECKBOX WAS CHECKED, DON'T ALLOW TO MANUALLY REMAP TO ANOTHER REAL LIFE DRIVER (THERE'S NO SENSE ANYWAY)
-                    if (rosterOnly == true)
-                        this.dgCars.Columns["mappedToRealDriverDataGridViewComboBoxColumn"].ReadOnly = true;
-                    else
-                        this.dgCars.Columns["mappedToRealDriverDataGridViewComboBoxColumn"].ReadOnly = false;
-
-
-                    if (RealDrivers != null)
-                    {
-                        this.mainProc.RealDrivers = this.MapRealDataToCars(RealDrivers, mappingMethod);
-                        this.LogUnmappedDrivers();
-                    }
-
-                    this.dgCars.Focus();
-                    this.dgCars.Refresh();
-
-                    if (this.dgCars.Rows.Count > 0)
-                    {
-                        this.dgCars.Rows[0].Selected = true;
-                        this.dgCars_SelectionChanged(null, null);
-                    }
-
-
+                    MessageBox.Show(result.Error, "Login unsuccessful", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                if (await UserManager.IsLoggedInAsync())
+                {
+                    if (!UserManager.IsEmailVerified() == true)
+                    {
+                        MessageBox.Show("You'll need to verify your email address before you can proceed. Please check your mails.", "Email Verification Required", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    }
+                    else if (UserManager.IsEmailVerified() == true)
+                    {
+                        frmGetRealData fRealData = new frmGetRealData();
+                        DialogResult dres = fRealData.ShowDialog();
+
+                        if (dres == DialogResult.OK)
+                        {
+                            ////START FROM A BLANK CARLIST
+                            //this.colCars.IsDirty = false; //set to false to avoid confirmation dialog
+                            //this.LoadCarList();
+
+
+                            RealDriverCollection RealDrivers = fRealData.RealDrivers;
+
+                            CarMappingMethod mappingMethod = fRealData.MappingMethod;
+                            bool rosterOnly = fRealData.CarListOnly;
+
+                            //IF THE "ROSTER ONLY" CHECKBOX WAS CHECKED, DON'T ALLOW TO MANUALLY REMAP TO ANOTHER REAL LIFE DRIVER (THERE'S NO SENSE ANYWAY)
+                            if (rosterOnly == true)
+                                this.dgCars.Columns["mappedToRealDriverDataGridViewComboBoxColumn"].ReadOnly = true;
+                            else
+                                this.dgCars.Columns["mappedToRealDriverDataGridViewComboBoxColumn"].ReadOnly = false;
+
+
+                            if (RealDrivers != null)
+                            {
+                                this.mainProc.RealDrivers = this.MapRealDataToCars(RealDrivers, mappingMethod);
+                                this.LogUnmappedDrivers();
+                            }
+
+                            this.dgCars.Focus();
+                            this.dgCars.Refresh();
+
+                            if (this.dgCars.Rows.Count > 0)
+                            {
+                                this.dgCars.Rows[0].Selected = true;
+                                this.dgCars_SelectionChanged(null, null);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -1115,13 +1126,11 @@ namespace NRatings.Client.GUI
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UserSettings userSettings = (UserSettings)Program.userSettings.Clone();
-            frmUserSettings fUserSettings = new frmUserSettings(userSettings);
+            frmUserSettings fUserSettings = new frmUserSettings();
             DialogResult dres = fUserSettings.ShowDialog();
         
             if (dres == DialogResult.OK)
             {
-                Program.userSettings = fUserSettings.UserSettings;
                 this.LoadNR2003Instances();
             }
         }
@@ -1231,8 +1240,24 @@ namespace NRatings.Client.GUI
         }
 
 
+
+
         #endregion
 
-        
+        #region Links
+
+        private void lnkDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://paypal.me/64racer");
+        }
+
+        private void lnkTwitch_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://twitch.tv/64racer");
+        }
+
+        #endregion
+
+
     }
 }

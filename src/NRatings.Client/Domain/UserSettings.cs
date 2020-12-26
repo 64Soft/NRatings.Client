@@ -2,23 +2,58 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using IdentityModel.OidcClient;
 using NRatings.Client.Auxiliary;
 using NRatings.Client.GUI;
 
 namespace NRatings.Client.Domain
 {
     [Serializable]
-    public class UserSettings : ICloneable
+    public class UserSettings
     {
         private static string filePath = Path.Combine(UserSettingsManager.GetSettingsPath(), @"usersettings.xml");
 
         public string DefaultFormula { get; set; }
-        public List<NR2003Instance> NR2003Instances { get; set; } 
+        public List<NR2003Instance> NR2003Instances { get; set; }
+
+        public string AccesToken { get; set; }
+        public DateTime? AccessTokenExpiration { get; set; }
+        public string RefreshToken { get; set; }
         
         public UserSettings()
         {
             this.DefaultFormula = String.Empty;
             this.NR2003Instances = new List<NR2003Instance>();
+        }
+
+        public void SaveAccessToken(string accessToken, DateTime accessTokenExpiration)
+        {
+            this.AccesToken = accessToken;
+            this.AccessTokenExpiration = accessTokenExpiration;
+
+            this.Save();
+        }
+
+        public void ClearAccessToken()
+        {
+            this.AccesToken = null;
+            this.AccessTokenExpiration = null;
+
+            this.Save();
+        }
+
+        public void SaveRefreshToken(string refreshToken)
+        {
+            this.RefreshToken = refreshToken;
+
+            this.Save();
+        }
+
+        public void ClearRefreshToken()
+        {
+            this.RefreshToken = null;
+
+            this.Save();
         }
 
         public void Save()
@@ -66,18 +101,5 @@ namespace NRatings.Client.Domain
             }
 
         }
-
-
-        #region ICloneable Members
-
-        public object Clone()
-        {
-            UserSettings clone = Helper.Clone<UserSettings>(this);
-            return clone;
-        }
-
-        #endregion
-
-        
     }
 }

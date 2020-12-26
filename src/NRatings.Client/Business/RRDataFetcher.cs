@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using NRatings.Client.ApiClient;
@@ -24,7 +25,7 @@ namespace NRatings.Client.Business
 
         public RRDataFetcher()
         {
-            var apiSettings = new APIClientSettings(Properties.Settings.Default.ApiBaseUri);
+            var apiSettings = new APIClientSettings(ConfigurationManager.AppSettings["ApiBaseUri"]);
             this.nratingsApiClient = new NRatingsApiClient(apiSettings);
         }
 

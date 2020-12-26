@@ -1,7 +1,5 @@
 using System;
-using System.IO;
 using System.Windows.Forms;
-using NRatings.Client.Auxiliary;
 using NRatings.Client.Domain;
 using NRatings.Client.GUI;
 
@@ -9,7 +7,7 @@ namespace NRatings.Client
 {
     static class Program
     {
-        public static UserSettings userSettings;
+        public static UserSettings UserSettings;
 
         /// <summary>
         /// The main entry point for the application.
@@ -19,10 +17,10 @@ namespace NRatings.Client
         {
             UserSettingsManager.CreateFoldersIfNeeded();
 
-            userSettings = UserSettings.Read(); //READ THE USERSETTINGS FIRST
+            UserSettings = UserSettings.Read(); //READ THE USERSETTINGS FIRST
 
-            if (userSettings == null)
-                userSettings = new UserSettings();
+            if (UserSettings == null)
+                UserSettings = new UserSettings();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
