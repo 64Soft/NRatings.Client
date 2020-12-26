@@ -80,7 +80,6 @@ namespace NRatings.Client.GUI
             this.revertRatingsOnlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revertCompletelyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lnkDonate = new System.Windows.Forms.LinkLabel();
-            this.lblLikingNRatings = new System.Windows.Forms.Label();
             this.lnkTwitch = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bsMods)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsNR2003Instances)).BeginInit();
@@ -522,7 +521,7 @@ namespace NRatings.Client.GUI
             // lnkDonate
             // 
             this.lnkDonate.AutoSize = true;
-            this.lnkDonate.Location = new System.Drawing.Point(106, 689);
+            this.lnkDonate.Location = new System.Drawing.Point(12, 689);
             this.lnkDonate.Name = "lnkDonate";
             this.lnkDonate.Size = new System.Drawing.Size(42, 13);
             this.lnkDonate.TabIndex = 24;
@@ -530,24 +529,15 @@ namespace NRatings.Client.GUI
             this.lnkDonate.Text = "Donate";
             this.lnkDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDonate_LinkClicked);
             // 
-            // lblLikingNRatings
-            // 
-            this.lblLikingNRatings.AutoSize = true;
-            this.lblLikingNRatings.Location = new System.Drawing.Point(12, 689);
-            this.lblLikingNRatings.Name = "lblLikingNRatings";
-            this.lblLikingNRatings.Size = new System.Drawing.Size(88, 13);
-            this.lblLikingNRatings.TabIndex = 25;
-            this.lblLikingNRatings.Text = "Liking NRatings?";
-            // 
             // lnkTwitch
             // 
             this.lnkTwitch.AutoSize = true;
-            this.lnkTwitch.Location = new System.Drawing.Point(154, 689);
+            this.lnkTwitch.Location = new System.Drawing.Point(833, 689);
             this.lnkTwitch.Name = "lnkTwitch";
-            this.lnkTwitch.Size = new System.Drawing.Size(141, 13);
+            this.lnkTwitch.Size = new System.Drawing.Size(124, 13);
             this.lnkTwitch.TabIndex = 26;
             this.lnkTwitch.TabStop = true;
-            this.lnkTwitch.Text = "Come and join me on Twitch";
+            this.lnkTwitch.Text = "https://twitch.tv/64racer";
             this.lnkTwitch.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkTwitch_LinkClicked);
             // 
             // frmNR2003Ratings
@@ -556,7 +546,6 @@ namespace NRatings.Client.GUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 711);
             this.Controls.Add(this.lnkTwitch);
-            this.Controls.Add(this.lblLikingNRatings);
             this.Controls.Add(this.lnkDonate);
             this.Controls.Add(this.cmbNR2003Instance);
             this.Controls.Add(this.butSelectNoCars);
@@ -648,7 +637,6 @@ namespace NRatings.Client.GUI
         private System.Windows.Forms.ToolStripMenuItem copyRatingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteRatingsToolStripMenuItem;
         private System.Windows.Forms.LinkLabel lnkDonate;
-        private System.Windows.Forms.Label lblLikingNRatings;
         private System.Windows.Forms.LinkLabel lnkTwitch;
     }
 }
