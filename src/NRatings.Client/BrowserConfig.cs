@@ -10,6 +10,11 @@ namespace NRatings.Client
 {
     static class BrowserConfig
     {
+        /// <summary>
+        /// Auth0.OidcClient uses WebCompatibleView by default. Try to set the FEATURE_BROWSER_EMULATION registry key for Win7 users
+        /// Todo: use WebView2 for Auth0.OidcClient once available
+        /// https://stackoverflow.com/questions/38514184/how-can-i-get-the-webbrowser-control-to-show-modern-contents
+        /// </summary>
         public static void SetWebBrowserFeatures()
         {
             // don't change the registry if running in-proc inside Visual Studio
