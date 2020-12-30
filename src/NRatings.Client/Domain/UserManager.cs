@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Auth0.OidcClient;
+using NRatings.Client.WebView2;
 
 namespace NRatings.Client.Domain
 {
@@ -25,22 +26,25 @@ namespace NRatings.Client.Domain
 
 
             //if previous step did not succeed, go through the login process
-            var loginResult = await GetAuth0Client().LoginAsync(extraParameters: GetAuth0Params());
-
-            if (!loginResult.IsError)
+            if (await WebView2Install.EnsureWebView2InstalledAsync())
             {
-                if (loginResult.User?.Identity is ClaimsIdentity identity)
+                var loginResult = await GetAuth0Client().LoginAsync(extraParameters: GetAuth0Params());
+
+                if (!loginResult.IsError)
                 {
-                    user = identity;
-                    Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration);
-                    Program.UserSettings.SaveRefreshToken(loginResult.RefreshToken);
+                    if (loginResult.User?.Identity is ClaimsIdentity identity)
+                    {
+                        user = identity;
+                        Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration);
+                        Program.UserSettings.SaveRefreshToken(loginResult.RefreshToken);
 
-                    return new UserLoginResult(true);
+                        return new UserLoginResult(true);
+                    }
                 }
-            }
-            else
-            {
-                return new UserLoginResult(false, loginResult.Error);
+                else
+                {
+                    return new UserLoginResult(false, loginResult.Error);
+                }
             }
 
             return new UserLoginResult(false, "Could not log you in");
@@ -130,7 +134,8 @@ namespace NRatings.Client.Domain
             var clientOptions = new Auth0ClientOptions
             {
                 Domain = ConfigurationManager.AppSettings["Auth0Domain"],
-                ClientId = ConfigurationManager.AppSettings["Auth0ClientId"]
+                ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
+                Browser = new WebView2Browser()
             };
 
             var client = new Auth0Client(clientOptions);

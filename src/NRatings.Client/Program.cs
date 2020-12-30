@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Windows.Forms;
 using NRatings.Client.Domain;
 using NRatings.Client.GUI;
@@ -21,6 +22,8 @@ namespace NRatings.Client
 
             if (UserSettings == null)
                 UserSettings = new UserSettings();
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

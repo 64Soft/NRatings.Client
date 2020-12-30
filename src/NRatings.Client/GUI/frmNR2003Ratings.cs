@@ -37,12 +37,6 @@ namespace NRatings.Client.GUI
         private delegate void EnableControlsIfDirtyCarCollectionDelegate(bool enable);
         //END DELEGATES
 
-        // static constructor, runs first
-        static frmNR2003Ratings()
-        {
-            BrowserConfig.SetWebBrowserFeatures();
-        }
-
         public frmNR2003Ratings()
         {
             InitializeComponent();

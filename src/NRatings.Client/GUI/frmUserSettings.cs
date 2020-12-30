@@ -284,8 +284,6 @@ namespace NRatings.Client.GUI
 
         private async void butLogin_Click(object sender, EventArgs e)
         {
-            await UserManager.LoginAsync();
-
             var result = await UserManager.LoginAsync();
             if (!result.Succeeded)
             {
