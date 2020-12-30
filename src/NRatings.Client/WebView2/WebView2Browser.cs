@@ -41,7 +41,7 @@ namespace NRatings.Client.WebView2
         }
 
         /// <inheritdoc />
-        public Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = default)
+        public Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
         {
             var tcs = new TaskCompletionSource<BrowserResult>();
 
