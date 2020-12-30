@@ -19,6 +19,7 @@ Following functionalities are offered:
 - A Windows based PC with Windows 7 SP1, Windows 8.1 or Windows 10 (recommended)
 - Of course, the game NASCAR Racing 2003 Season itself
 - The Microsoft .NET Framework 4.7.2 or higher
+- The Edge WebView2 Runtime (you will be prompted in the app if you don't have it): https://go.microsoft.com/fwlink/p/?LinkId=2124703
 
 ## Credits
 
