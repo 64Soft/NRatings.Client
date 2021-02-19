@@ -86,8 +86,12 @@ namespace NRatings.Client.Business
                     RaceName = r.RaceName,
                     RaceDate = r.RaceDate,
                     Track = new Track() { Id = r.TrackId, Name = r.TrackName },
-                    TrackTypeId = r.TrackTypeId,
-                    NR2003TrackTypeId = r.NR2003TrackTypeId
+                    TrackLengthMiles = r.TrackLengthMiles,
+                    Surface = r.Surface,
+                    RaceLengthMiles = r.RaceLengthMiles,
+                    Cautions = r.Cautions,
+                    CautionLaps = r.CautionLaps,
+                    LeadChanges = r.LeadChanges
                 }).ToList();
             }
             catch (Exception ex)
@@ -149,13 +153,6 @@ namespace NRatings.Client.Business
 
                 IList<DriverRaceData> result = new List<DriverRaceData>();
 
-                IList<TrackType> trackTypes = dto.TrackTypes.Select(tt => new TrackType()
-                {
-                    Id = tt.Id,
-                    Name = tt.Name,
-                    Description = tt.Description
-                }).ToList();
-
                 IList<Track> tracks = dto.Tracks.Select(t => new Track()
                 {
                     Id = t.Id,
@@ -168,8 +165,12 @@ namespace NRatings.Client.Business
                     RaceName = r.RaceName,
                     RaceDate = r.RaceDate,
                     Track = tracks.FirstOrDefault(t => t.Id == r.TrackId),
-                    TrackTypeId = r.TrackTypeId,
-                    NR2003TrackTypeId = r.NR2003TrackTypeId
+                    TrackLengthMiles = r.TrackLengthMiles,
+                    Surface = r.Surface,
+                    RaceLengthMiles = r.RaceLengthMiles,
+                    Cautions = r.Cautions,
+                    CautionLaps = r.CautionLaps,
+                    LeadChanges = r.LeadChanges
                 }).ToList();
 
                 IList<Driver> drivers = dto.Drivers.Select(d => new Driver()

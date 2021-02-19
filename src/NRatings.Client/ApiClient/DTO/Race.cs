@@ -10,10 +10,12 @@ namespace NRatings.Client.ApiClient.DTO
         public string RaceName { get; set; }
         public int TrackId { get; set; }
         public string TrackName { get; set; }
-        public DateTime RaceDate { get; set; }    
-        public string TrackTypeId { get; set; }
-        public string TrackTypeName { get; set; }
-        public string NR2003TrackTypeId { get; set; }
-        public string NR2003TrackTypeName { get; set; }
+        public DateTime RaceDate { get; set; }
+        public double? TrackLengthMiles { get; set; }
+        public string Surface { get; set; }
+        public double? RaceLengthMiles { get; set; }
+        public int? Cautions { get; set; }
+        public int? CautionLaps { get; set; }
+        public int? LeadChanges { get; set; }
     }
 }
