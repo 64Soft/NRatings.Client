@@ -25,7 +25,6 @@ Following functionalities are offered:
 NRatings couldn't exist without contribution from these individuals and communities:
 
 - https://racing-reference.info for providing the racing stats
-- https://www.heliohost.org for providing the free hosting space for the backend. Please seriously consider donating to these guys if you like NRatings and use it often
 - Following authors for providing the formulas that come embedded with the application:
   - MasGrafx (S10Man / OmegaSeven)
   - Dennis Grebe
@@ -35,7 +34,7 @@ NRatings couldn't exist without contribution from these individuals and communit
 
 ## Download
 
-[Click here to download the latest executable version](https://nratings.heliohost.org/download/client/NRatings.Client.application)
+[Click here to download the latest executable version](https://www.64soft.eu/nratings/download/client/NRatings.Client.application)
 
 Since v5.1.0, it is now again required to log in when you want to use the real life racing data feature. This was re-introduced to protect the backend racing data API from being abused. The signup/login process is now however completely integrated in the application itself, and you can use social logins. However please note that earlier accounts (pre v5) will no longer work. You'll need to sign up for a new one, but you can reuse the same email address you used for the pre v5 version. However you are encouraged to use one of the social login options presented to you in the login screen. 
 
