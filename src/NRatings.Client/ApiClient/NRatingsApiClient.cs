@@ -15,7 +15,7 @@ namespace NRatings.Client.ApiClient
         {
             var request = this.GetApiFlurlRequest();
 
-            request.AppendPathSegment("tracktypes");
+            request.AppendPathSegment("racingdata/tracktypes");
 
             return await request.GetJsonAsync<List<TrackType>>();
 
@@ -25,7 +25,7 @@ namespace NRatings.Client.ApiClient
         {
             var request = this.GetApiFlurlRequest();
 
-            request.AppendPathSegment("series");
+            request.AppendPathSegment("racingdata/series");
 
             return await request.GetJsonAsync<List<Series>>();
 
@@ -35,7 +35,7 @@ namespace NRatings.Client.ApiClient
         {
             var request = this.GetApiFlurlRequest();
 
-            request.AppendPathSegment("races");
+            request.AppendPathSegment("racingdata/races");
             request.SetQueryParam("seasonId", seasonId);
 
             return await request.GetJsonAsync<List<Race>>();
@@ -46,7 +46,7 @@ namespace NRatings.Client.ApiClient
         {
             var request = this.GetApiFlurlRequest();
 
-            request.AppendPathSegment("races/details");
+            request.AppendPathSegment("nr2003/racedata");
             return await request.PostJsonAsync(raceIds).ReceiveJson<RacesDetails>();
 
         }

@@ -42,7 +42,6 @@ namespace NRatings.Client.GUI
             this.lapsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lapsLedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.carDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sponsorsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.raceStateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsRaceResults = new System.Windows.Forms.BindingSource(this.components);
             this.butLoopData = new System.Windows.Forms.Button();
@@ -87,7 +86,6 @@ namespace NRatings.Client.GUI
             this.lapsDataGridViewTextBoxColumn,
             this.lapsLedDataGridViewTextBoxColumn,
             this.carDataGridViewTextBoxColumn,
-            this.sponsorsDataGridViewTextBoxColumn,
             this.raceStateDataGridViewTextBoxColumn});
             this.dgResults.DataSource = this.bsRaceResults;
             this.dgResults.Location = new System.Drawing.Point(17, 60);
@@ -154,13 +152,6 @@ namespace NRatings.Client.GUI
             this.carDataGridViewTextBoxColumn.HeaderText = "Car";
             this.carDataGridViewTextBoxColumn.Name = "carDataGridViewTextBoxColumn";
             this.carDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // sponsorsDataGridViewTextBoxColumn
-            // 
-            this.sponsorsDataGridViewTextBoxColumn.DataPropertyName = "Sponsors";
-            this.sponsorsDataGridViewTextBoxColumn.HeaderText = "Sponsors";
-            this.sponsorsDataGridViewTextBoxColumn.Name = "sponsorsDataGridViewTextBoxColumn";
-            this.sponsorsDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // raceStateDataGridViewTextBoxColumn
             // 
@@ -230,7 +221,6 @@ namespace NRatings.Client.GUI
         private System.Windows.Forms.DataGridViewTextBoxColumn lapsDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn lapsLedDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn carDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sponsorsDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn raceStateDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource bsRaceResults;
         private System.Windows.Forms.Button butLoopData;

@@ -101,10 +101,10 @@ namespace NRatings.Client.Domain
                     Program.UserSettings.SaveAccessToken(tokenResult.AccessToken, tokenResult.AccessTokenExpiration);
                     if (tokenResult.RefreshToken != null)
                         Program.UserSettings.SaveRefreshToken(tokenResult.RefreshToken);
-
-                    await SetUserFromAccessTokenAsync();
                 }
             }
+
+            await SetUserFromAccessTokenAsync();
         }
 
         private static async Task SetUserFromAccessTokenAsync()
