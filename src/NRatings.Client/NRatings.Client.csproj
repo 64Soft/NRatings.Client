@@ -500,10 +500,10 @@
   <ItemGroup />
   <ItemGroup>
     <PackageReference Include="Auth0.OidcClient.WinForms">
-      <Version>3.1.4</Version>
+      <Version>3.2.1</Version>
     </PackageReference>
     <PackageReference Include="Flurl.Http">
-      <Version>3.0.1</Version>
+      <Version>3.2.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets">
       <Version>2.0.0</Version>
@@ -514,13 +514,16 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.WebView2">
-      <Version>1.0.705.50</Version>
+      <Version>1.0.818.41</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
+      <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
       <Version>5.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Encodings.Web">
+      <Version>5.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -555,7 +558,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UseGlobalSettings="False" BuildVersion_BuildVersioningStyle="None.None.None.None" BuildVersion_UpdateFileVersion="False" BuildVersion_UpdateAssemblyVersion="False" Reactor_Output="[main_assembly_dir]NRatings_Secure\NRatings.exe" Reactor_Project="" Reactor_Commands="" Reactor_Automatic="1" Reactor_Lib="0" Reactor_Enabled="0" />
+      <UserProperties Reactor_Enabled="0" Reactor_Lib="0" Reactor_Automatic="1" Reactor_Commands="" Reactor_Project="" Reactor_Output="[main_assembly_dir]NRatings_Secure\NRatings.exe" BuildVersion_UpdateAssemblyVersion="False" BuildVersion_UpdateFileVersion="False" BuildVersion_BuildVersioningStyle="None.None.None.None" BuildVersion_UseGlobalSettings="False" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
