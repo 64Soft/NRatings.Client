@@ -102,6 +102,13 @@ namespace NRatings.Client.Domain
                     if (tokenResult.RefreshToken != null)
                         Program.UserSettings.SaveRefreshToken(tokenResult.RefreshToken);
                 }
+                else
+                {
+                    //if refresh token resulted in error, clear all tokens to completely to re-initialize the login system
+                    user = null;
+                    Program.UserSettings.ClearAccessToken();
+                    Program.UserSettings.ClearRefreshToken();
+                }
             }
 
             await SetUserFromAccessTokenAsync();
