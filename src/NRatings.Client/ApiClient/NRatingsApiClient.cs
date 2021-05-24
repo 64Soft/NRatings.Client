@@ -46,7 +46,7 @@ namespace NRatings.Client.ApiClient
         {
             var request = this.GetApiFlurlRequest();
 
-            request.AppendPathSegment("nr2003/racedata");
+            request.AppendPathSegment("airater/nr2003/racedata");
             return await request.PostJsonAsync(raceIds).ReceiveJson<RacesDetails>();
 
         }
