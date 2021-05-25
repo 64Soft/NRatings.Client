@@ -1,4 +1,4 @@
-next-version: 5.1.0
+next-version: 5.1.5
 mode: ContinuousDelivery
 assembly-informational-format: '{MajorMinorPatch}'
 branches: {}
