@@ -285,7 +285,7 @@ namespace NRatings.Client.GUI
         private async void butLogin_Click(object sender, EventArgs e)
         {
             var result = await UserManager.LoginAsync(this);
-            if (!result.Succeeded)
+            if (result != null && !result.Succeeded)
             {
                 MessageBox.Show(result.Error, "Login unsuccessful", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

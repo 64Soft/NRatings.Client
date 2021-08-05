@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Auth0.OidcClient;
 using NRatings.Client.Auxiliary;
-using NRatings.Client.WebView2;
 
 namespace NRatings.Client.Domain
 {
     public static class UserManager
     {
         private static ClaimsIdentity user;
+        private static NativeBrowser nativeBrowser = new NativeBrowser();
+        private static Auth0Client auth0Client;
+        private static bool loginOngoing;
 
         public static string UserName => user?.FindFirst("name")?.Value;
         public static string Email => user?.FindFirst("email")?.Value;
@@ -26,11 +29,14 @@ namespace NRatings.Client.Domain
             if(HasValidAccessToken())
                 return new UserLoginResult(true);
 
-
-            //if previous step did not succeed, go through the login process
-            if (await WebView2Install.EnsureWebView2InstalledAsync())
+            //if user previously started login process but closed browser, the httplistener is still open. If that is the case, just reopen the browser with the startUrl so the listener can pick it up again
+            if (loginOngoing)
+                Process.Start(nativeBrowser.StartUrl);
+            else
             {
+                loginOngoing = true;
                 var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
+                loginOngoing = false;
 
                 if (!loginResult.IsError)
                 {
@@ -49,7 +55,7 @@ namespace NRatings.Client.Domain
                 }
             }
 
-            return new UserLoginResult(false, "Could not log you in");
+            return null;
         }
 
         
@@ -140,19 +146,23 @@ namespace NRatings.Client.Domain
 
         private static Auth0Client GetAuth0Client(Form callingForm = null)
         {
-            var clientOptions = new Auth0ClientOptions
+            nativeBrowser.CallingForm = callingForm;
+
+            if (auth0Client == null)
             {
-                Domain = ConfigurationManager.AppSettings["Auth0Domain"],
-                ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
-                //Browser = new WebView2Browser()
-                Browser = new NativeBrowser(callingForm),
-                RedirectUri = ConfigurationManager.AppSettings["AuthNativeBrowserCallbackUri"],
-            };
+                var clientOptions = new Auth0ClientOptions
+                {
+                    Domain = ConfigurationManager.AppSettings["Auth0Domain"],
+                    ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
+                    Browser = nativeBrowser,
+                    RedirectUri = ConfigurationManager.AppSettings["AuthNativeBrowserCallbackUri"],
+                };
 
-            var client = new Auth0Client(clientOptions);
-            clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
+                clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
+                auth0Client = new Auth0Client(clientOptions);
+            }
 
-            return client;
+            return auth0Client;
         }
 
         private static Dictionary<string, string> GetAuth0Params()

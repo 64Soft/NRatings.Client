@@ -972,7 +972,7 @@ namespace NRatings.Client.GUI
             if (showImportDialog)
             {
                 var result = await UserManager.LoginAsync(this);
-                if (!result.Succeeded)
+                if (result != null && !result.Succeeded)
                 {
                     MessageBox.Show(result.Error, "Login unsuccessful", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

@@ -18,15 +18,14 @@ namespace NRatings.Client.Auxiliary
     {
         private string callbackUri = ConfigurationManager.AppSettings["AuthNativeBrowserCallbackUri"];
         private string redirectUri = ConfigurationManager.AppSettings["AuthNativeBrowserRedirectBaseUri"].AppendPathSegment("login");
-        private Form callingForm;
-
-        public NativeBrowser(Form callingForm)
-        {
-            this.callingForm = callingForm;
-        }
-
+        
+        public Form CallingForm { get; set; }
+        public string StartUrl { get; private set; }
+        
         public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
         {
+            this.StartUrl = options.StartUrl;
+
             string authResponse = null;
 
             // Creates an HttpListener to listen for requests on that redirect URI.
@@ -34,7 +33,7 @@ namespace NRatings.Client.Auxiliary
             {
                 http.Prefixes.Add(callbackUri);
                 http.Start();
-                
+
                 // Opens request in the browser.
                 Process.Start(options.StartUrl);
 
@@ -42,8 +41,7 @@ namespace NRatings.Client.Auxiliary
                 var context = await http.GetContextAsync();
                 authResponse = context.Request.Url.ToString();
 
-                if (callingForm != null)
-                    callingForm.Activate();
+                this.CallingForm?.Activate();
 
                 // Sends an HTTP response to the browser.
                 var response = context.Response;
@@ -59,7 +57,6 @@ namespace NRatings.Client.Auxiliary
 
                 http.Stop();
             }
-
 
             return new BrowserResult() { ResultType = BrowserResultType.Success, Response = authResponse };
         }
