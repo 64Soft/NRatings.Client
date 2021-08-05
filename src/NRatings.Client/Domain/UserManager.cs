@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Auth0.OidcClient;
+using NRatings.Client.Auxiliary;
 using NRatings.Client.WebView2;
 
 namespace NRatings.Client.Domain
@@ -16,7 +18,7 @@ namespace NRatings.Client.Domain
         public static string Email => user?.FindFirst("email")?.Value;
 
 
-        public static async Task<UserLoginResult> LoginAsync()
+        public static async Task<UserLoginResult> LoginAsync(Form callingForm = null)
         {
             //first try to use a possible refresh token to obtain a new access token
             await RefreshAccessToken();
@@ -28,7 +30,7 @@ namespace NRatings.Client.Domain
             //if previous step did not succeed, go through the login process
             if (await WebView2Install.EnsureWebView2InstalledAsync())
             {
-                var loginResult = await GetAuth0Client().LoginAsync(extraParameters: GetAuth0Params());
+                var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
 
                 if (!loginResult.IsError)
                 {
@@ -69,13 +71,13 @@ namespace NRatings.Client.Domain
             return null;
         }
 
-        public static async Task LogOutAsync()
+        public static async Task LogOutAsync(Form callingForm = null)
         {
             user = null;
             Program.UserSettings.ClearAccessToken();
             Program.UserSettings.ClearRefreshToken();
 
-            await GetAuth0Client().LogoutAsync();
+            await GetAuth0Client(callingForm).LogoutAsync();
         }
 
         public static async Task<string> GetUserInfoStringAsync(string propertySeparator = ";")
@@ -136,13 +138,15 @@ namespace NRatings.Client.Domain
             return !string.IsNullOrEmpty(Program.UserSettings.RefreshToken);
         }
 
-        private static Auth0Client GetAuth0Client()
+        private static Auth0Client GetAuth0Client(Form callingForm = null)
         {
             var clientOptions = new Auth0ClientOptions
             {
                 Domain = ConfigurationManager.AppSettings["Auth0Domain"],
                 ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
-                Browser = new WebView2Browser()
+                //Browser = new WebView2Browser()
+                Browser = new NativeBrowser(callingForm),
+                RedirectUri = ConfigurationManager.AppSettings["AuthNativeBrowserCallbackUri"],
             };
 
             var client = new Auth0Client(clientOptions);

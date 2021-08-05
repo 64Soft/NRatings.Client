@@ -134,6 +134,7 @@
     <Compile Include="Auxiliary\GenericBackWorker.cs" />
     <Compile Include="Auxiliary\Helper.cs" />
     <Compile Include="Auxiliary\EnumListItem.cs" />
+    <Compile Include="Auxiliary\NativeBrowser.cs" />
     <Compile Include="Business\RRDataFetcher.cs" />
     <Compile Include="Business\MainProcessor.cs" />
     <Compile Include="Business\RatingsModifier.cs" />
@@ -514,7 +515,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.WebView2">
-      <Version>1.0.818.41</Version>
+      <Version>1.0.902.49</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
