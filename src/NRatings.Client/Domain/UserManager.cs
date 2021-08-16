@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Auth0.OidcClient;
-using NRatings.Client.WebView2;
+using NRatings.Client.Auxiliary;
 
 namespace NRatings.Client.Domain
 {
     public static class UserManager
     {
         private static ClaimsIdentity user;
+        private static NativeBrowser nativeBrowser = new NativeBrowser();
+        private static Auth0Client auth0Client;
+        private static bool loginOngoing;
 
         public static string UserName => user?.FindFirst("name")?.Value;
         public static string Email => user?.FindFirst("email")?.Value;
 
 
-        public static async Task<UserLoginResult> LoginAsync()
+        public static async Task<UserLoginResult> LoginAsync(Form callingForm = null)
         {
             //first try to use a possible refresh token to obtain a new access token
             await RefreshAccessToken();
@@ -24,11 +29,14 @@ namespace NRatings.Client.Domain
             if(HasValidAccessToken())
                 return new UserLoginResult(true);
 
-
-            //if previous step did not succeed, go through the login process
-            if (await WebView2Install.EnsureWebView2InstalledAsync())
+            //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
+            if (loginOngoing)
+                Process.Start(nativeBrowser.StartUrl);
+            else
             {
-                var loginResult = await GetAuth0Client().LoginAsync(extraParameters: GetAuth0Params());
+                loginOngoing = true;
+                var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
+                loginOngoing = false;
 
                 if (!loginResult.IsError)
                 {
@@ -47,7 +55,7 @@ namespace NRatings.Client.Domain
                 }
             }
 
-            return new UserLoginResult(false, "Could not log you in");
+            return null;
         }
 
         
@@ -69,13 +77,13 @@ namespace NRatings.Client.Domain
             return null;
         }
 
-        public static async Task LogOutAsync()
+        public static async Task LogOutAsync(Form callingForm = null)
         {
             user = null;
             Program.UserSettings.ClearAccessToken();
             Program.UserSettings.ClearRefreshToken();
 
-            await GetAuth0Client().LogoutAsync();
+            await GetAuth0Client(callingForm).LogoutAsync();
         }
 
         public static async Task<string> GetUserInfoStringAsync(string propertySeparator = ";")
@@ -136,19 +144,25 @@ namespace NRatings.Client.Domain
             return !string.IsNullOrEmpty(Program.UserSettings.RefreshToken);
         }
 
-        private static Auth0Client GetAuth0Client()
+        private static Auth0Client GetAuth0Client(Form callingForm = null)
         {
-            var clientOptions = new Auth0ClientOptions
+            nativeBrowser.CallingForm = callingForm;
+
+            if (auth0Client == null)
             {
-                Domain = ConfigurationManager.AppSettings["Auth0Domain"],
-                ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
-                Browser = new WebView2Browser()
-            };
+                var clientOptions = new Auth0ClientOptions
+                {
+                    Domain = ConfigurationManager.AppSettings["Auth0Domain"],
+                    ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
+                    Browser = nativeBrowser,
+                    RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"],
+                };
 
-            var client = new Auth0Client(clientOptions);
-            clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
+                clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
+                auth0Client = new Auth0Client(clientOptions);
+            }
 
-            return client;
+            return auth0Client;
         }
 
         private static Dictionary<string, string> GetAuth0Params()
