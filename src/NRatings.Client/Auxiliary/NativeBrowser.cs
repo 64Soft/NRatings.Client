@@ -16,7 +16,7 @@ namespace NRatings.Client.Auxiliary
 {
     public class NativeBrowser : IBrowser
     {
-        private string redirectUri = ConfigurationManager.AppSettings["AuthNativeBrowserRedirectBaseUri"].AppendPathSegment("login");
+        private string redirectBaseUri = ConfigurationManager.AppSettings["AuthNativeBrowserRedirectBaseUri"];
         
         public Form CallingForm { get; set; }
         public string StartUrl { get; private set; }
@@ -24,6 +24,10 @@ namespace NRatings.Client.Auxiliary
         public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
         {
             this.StartUrl = options.StartUrl;
+
+            var redirectUri = this.StartUrl.Contains("logout?")
+                ? this.redirectBaseUri.AppendPathSegment("logout")
+                : this.redirectBaseUri.AppendPathSegment("login");
 
             // Opens request in the browser.
             Process.Start(options.StartUrl);
