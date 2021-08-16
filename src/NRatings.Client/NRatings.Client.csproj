@@ -134,6 +134,7 @@
     <Compile Include="Auxiliary\GenericBackWorker.cs" />
     <Compile Include="Auxiliary\Helper.cs" />
     <Compile Include="Auxiliary\EnumListItem.cs" />
+    <Compile Include="Auxiliary\AuthHttpServer.cs" />
     <Compile Include="Auxiliary\NativeBrowser.cs" />
     <Compile Include="Business\RRDataFetcher.cs" />
     <Compile Include="Business\MainProcessor.cs" />

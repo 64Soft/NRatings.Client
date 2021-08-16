@@ -16,7 +16,6 @@ namespace NRatings.Client.Auxiliary
 {
     public class NativeBrowser : IBrowser
     {
-        private string callbackUri = ConfigurationManager.AppSettings["AuthNativeBrowserCallbackUri"];
         private string redirectUri = ConfigurationManager.AppSettings["AuthNativeBrowserRedirectBaseUri"].AppendPathSegment("login");
         
         public Form CallingForm { get; set; }
@@ -26,36 +25,25 @@ namespace NRatings.Client.Auxiliary
         {
             this.StartUrl = options.StartUrl;
 
-            string authResponse = null;
+            // Opens request in the browser.
+            Process.Start(options.StartUrl);
 
-            // Creates an HttpListener to listen for requests on that redirect URI.
-            using (var http = new HttpListener())
+            // Waits for the OAuth authorization response.
+            var context = await Program.HttpServer.GetHttpListenerContextAsync();
+            var authResponse = context.Request.Url.ToString();
+
+            this.CallingForm?.Activate();
+
+            // Sends an HTTP response to the browser.
+            var response = context.Response;
+            response.RedirectLocation = redirectUri;
+            response.StatusCode = 302;
+            var responseString = @"<html><body>You are being redirected...</body></html>";
+            var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+            response.ContentLength64 = buffer.Length;
+            using (var output = response.OutputStream)
             {
-                http.Prefixes.Add(callbackUri);
-                http.Start();
-
-                // Opens request in the browser.
-                Process.Start(options.StartUrl);
-
-                // Waits for the OAuth authorization response.
-                var context = await http.GetContextAsync();
-                authResponse = context.Request.Url.ToString();
-
-                this.CallingForm?.Activate();
-
-                // Sends an HTTP response to the browser.
-                var response = context.Response;
-                response.RedirectLocation = redirectUri;
-                response.StatusCode = 302;
-                var responseString = @"<html><body>You are being redirected...</body></html>";
-                var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-                response.ContentLength64 = buffer.Length;
-                using (var output = response.OutputStream)
-                {
-                    await output.WriteAsync(buffer, 0, buffer.Length);
-                }
-
-                http.Stop();
+                await output.WriteAsync(buffer, 0, buffer.Length);
             }
 
             return new BrowserResult() { ResultType = BrowserResultType.Success, Response = authResponse };

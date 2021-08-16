@@ -29,7 +29,7 @@ namespace NRatings.Client.Domain
             if(HasValidAccessToken())
                 return new UserLoginResult(true);
 
-            //if user previously started login process but closed browser, the httplistener is still open. If that is the case, just reopen the browser with the startUrl so the listener can pick it up again
+            //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
             if (loginOngoing)
                 Process.Start(nativeBrowser.StartUrl);
             else
@@ -155,7 +155,7 @@ namespace NRatings.Client.Domain
                     Domain = ConfigurationManager.AppSettings["Auth0Domain"],
                     ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
                     Browser = nativeBrowser,
-                    RedirectUri = ConfigurationManager.AppSettings["AuthNativeBrowserCallbackUri"],
+                    RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"],
                 };
 
                 clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
