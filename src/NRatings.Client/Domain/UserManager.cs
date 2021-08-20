@@ -23,39 +23,46 @@ namespace NRatings.Client.Domain
 
         public static async Task<UserLoginResult> LoginAsync(Form callingForm = null)
         {
-            //first try to use a possible refresh token to obtain a new access token
-            await RefreshAccessToken();
-
-            if(HasValidAccessToken())
-                return new UserLoginResult(true);
-
-            //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
-            if (loginOngoing)
-                Process.Start(nativeBrowser.StartUrl);
-            else
+            try
             {
-                loginOngoing = true;
-                var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
-                loginOngoing = false;
+                //first try to use a possible refresh token to obtain a new access token
+                await RefreshAccessToken();
 
-                if (!loginResult.IsError)
-                {
-                    if (loginResult.User?.Identity is ClaimsIdentity identity)
-                    {
-                        user = identity;
-                        Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration);
-                        Program.UserSettings.SaveRefreshToken(loginResult.RefreshToken);
+                if (HasValidAccessToken())
+                    return new UserLoginResult(true);
 
-                        return new UserLoginResult(true);
-                    }
-                }
+                //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
+                if (loginOngoing)
+                    Process.Start(nativeBrowser.StartUrl);
                 else
                 {
-                    return new UserLoginResult(false, loginResult.Error);
-                }
-            }
+                    loginOngoing = true;
+                    var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
+                    loginOngoing = false;
 
-            return null;
+                    if (!loginResult.IsError)
+                    {
+                        if (loginResult.User?.Identity is ClaimsIdentity identity)
+                        {
+                            user = identity;
+                            Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration);
+                            Program.UserSettings.SaveRefreshToken(loginResult.RefreshToken);
+
+                            return new UserLoginResult(true);
+                        }
+                    }
+                    else
+                    {
+                        return new UserLoginResult(false, loginResult.Error);
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return new UserLoginResult(false, ex.Message);
+            }
         }
 
         
