@@ -295,8 +295,16 @@ namespace NRatings.Client.GUI
 
         private async void butLogout_Click(object sender, EventArgs e)
         {
-            await UserManager.LogOutAsync(this);
-            await SetUserInfoAsync();
+            try
+            {
+                await UserManager.LogOutAsync(this);
+                await SetUserInfoAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error on logout", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
     }
 }
