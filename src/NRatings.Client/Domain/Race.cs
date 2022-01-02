@@ -49,9 +49,9 @@ namespace NRatings.Client.Domain
                 {
                     if (TrackLengthMiles < 1.0)
                         return "ST";
-                    else if (this.Track.Name.Contains("Daytona") || this.Track.Name.Contains("Talladega"))
+                    if (this.Track.Name.Contains("Daytona") || this.Track.Name.Contains("Talladega"))
                         return "SS";
-                    if (TrackLengthMiles >= 2.0)
+                    if (TrackLengthMiles >= 1.0)
                         return "SW";
                 }
 
