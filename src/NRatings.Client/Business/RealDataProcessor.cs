@@ -501,94 +501,190 @@ namespace NRatings.Client.Business
 
             if (mappingMethod == CarMappingMethod.NAME)
             {
-                stats = (from s in stats
-                         group s by s.Driver into gr
-                         from s in gr
-                         orderby gr.Average(s2 => s2.AvgFinish).Round(4) ascending
+                stats = (from drd in driverRaceDataList
+                         group drd by new { drd.RaceResult.Driver } into gr
+                         from drd in gr
+                         orderby gr.Average(drd2 => drd2.RaceResult.FinishPosition).Round(4) ascending
                          select new DriverStats
                          {
                              CarNumber = null,
-                             Driver = s.Driver,
-                             AvgFinish = gr.Average(s2 => s2.AvgFinish).Round(4),
-                             AvgFinishExcludingDnf = gr.Average(s2 => s2.AvgFinishExcludingDnf).Round(4),
-                             LeadLapFinishes = gr.Sum(s2 => s2.LeadLapFinishes),
-                             AvgStart = gr.Average(s2 => s2.AvgStart).Round(4),
-                             BestFinish = gr.Min(s2 => s2.BestFinish),
-                             BestStart = gr.Min(s2 => s2.BestStart),
-                             RaceStarts = gr.Sum(s2 => s2.RaceStarts),
-                             PercRaceStarts = gr.Sum(s2 => s2.PercRaceStarts),
-                             AvgNumberOfStarters = gr.Average(s2 => s2.AvgNumberOfStarters).Round(4),
-                             Wins = gr.Sum(s2 => s2.Wins),
-                             Poles = gr.Sum(s2 => s2.Poles),
-                             Top5 = gr.Sum(s2 => s2.Top5),
-                             Top10 = gr.Sum(s2 => s2.Top10),
-                             DnfCrash = gr.Sum(s2 => s2.DnfCrash),
-                             DnfMechanical = gr.Sum(s2 => s2.DnfMechanical),
-                             PercLapsCompleted = gr.Average(s2 => s2.PercLapsCompleted).Round(4),
-                             PercLapsLed = gr.Average(s2 => s2.PercLapsLed).Round(4),
-                             AvgMidRacePosition = gr.Average(s2 => s2.AvgMidRacePosition).Round(4),
-                             AvgHighestPosition = gr.Average(s2 => s2.AvgHighestPosition).Round(4),
-                             AvgLowestPosition = gr.Average(s2 => s2.AvgLowestPosition).Round(4),
-                             AvgPosition = gr.Average(s2 => s2.AvgPosition).Round(4),
-                             AvgGreenFlagPasses = gr.Average(s2 => s2.AvgGreenFlagPasses).Round(4),
-                             AvgGreenFlagPassed = gr.Average(s2 => s2.AvgGreenFlagPassed).Round(4),
-                             AvgQualityPasses = gr.Average(s2 => s2.AvgQualityPasses).Round(4),
-                             AvgPercQualityPasses = gr.Average(s2 => s2.AvgPercQualityPasses).Round(4),
-                             AvgFastestLaps = gr.Average(s2 => s2.AvgFastestLaps).Round(4),
-                             AvgPercFastestLaps = gr.Average(s2 => s2.AvgPercFastestLaps).Round(4),
-                             AvgTop15Laps = gr.Average(s2 => s2.AvgTop15Laps).Round(4),
-                             AvgPercTop15Laps = gr.Average(s2 => s2.AvgPercTop15Laps).Round(4),
-                             AvgRating = gr.Average(s2 => s2.AvgRating).Round(4),
-                             AvgPitStopTimeRank = gr.Average(s2 => s2.AvgPitStopTimeRank).Round(4),
-                             RacesInGarage = (from s2 in gr select s2.RacesInGarage * new int?(1)).NullableSum(),
-                             PercRacesInGarage = gr.Average(s2 => s2.PercRacesInGarage).Round(4)
+                             Driver = drd.Driver,
+                             AvgFinish = gr.Average(drd2 => (int?)drd2.RaceResult.FinishPosition).Round(4),
+                             AvgFinishExcludingDnf = gr.Where(drd2 => drd2.RaceResult.RaceState.IsDNF == false).Average(drd2 => (int?)drd2.RaceResult.FinishPosition).Round(4),
+                             LeadLapFinishes = (from drd2 in gr
+                                                join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                                where drd2.RaceResult.Laps == rinf.WinnerLaps
+                                                select drd2).Count(),
+                             AvgStart = gr.Average(drd2 => drd2.RaceResult.StartPosition).Round(4),
+                             BestFinish = (from drd2 in gr
+                                           where drd2.RaceResult != null
+                                           select drd2.RaceResult.FinishPosition).Min(),
+                             BestStart = (from drd2 in gr
+                                          where drd2.RaceResult != null
+                                          select drd2.RaceResult.StartPosition).Min(),
+                             RaceStarts = gr.Count(),
+                             PercRaceStarts = ((gr.Count() * 1.0) / (racesInfo.Count() * 1.0)).Round(4),
+                             AvgNumberOfStarters = (from drd2 in gr
+                                                    join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                                    select rinf.NumberOfStarters).Average().Round(4),
+                             Wins = (from drd2 in gr where drd2.RaceResult.FinishPosition == 1 select drd2).Count(),
+                             Poles = (from drd2 in gr where drd2.RaceResult.StartPosition == 1 select drd2).Count(),
+                             Top5 = (from drd2 in gr where drd2.RaceResult.FinishPosition <= 5 select drd2).Count(),
+                             Top10 = (from drd2 in gr where drd2.RaceResult.FinishPosition <= 10 select drd2).Count(),
+                             DnfCrash = (from drd2 in gr where drd2.RaceResult.RaceState.IsDNFCrash select drd2).Count(),
+                             DnfMechanical = (from drd2 in gr where drd2.RaceResult.RaceState.IsDNFMechanical select drd2).Count(),
+                             PercLapsCompleted = (from drd2 in gr
+                                                  join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                                  select (drd2.RaceResult.Laps * 1.0) / (rinf.WinnerLaps * 1.0)).Average().Round(4),
+                             PercLapsLed = (from drd2 in gr
+                                            join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                            select (drd2.RaceResult.LapsLed * 1.0) / (rinf.WinnerLaps * 1.0)).Average().Round(4),
+                             AvgMidRacePosition = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.MidRacePosition).Average().Round(4),
+                             AvgHighestPosition = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.HighestPosition).Average().Round(4),
+                             AvgLowestPosition = (from drd2 in gr
+                                                  where drd2.LoopData != null
+                                                  select drd2.LoopData.LowestPosition).Average().Round(4),
+                             AvgPosition = (from drd2 in gr
+                                            where drd2.LoopData != null
+                                            select drd2.LoopData.AveragePosition).Average().Round(4),
+                             AvgGreenFlagPasses = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.GreenFlagPasses).Average().Round(4),
+                             AvgGreenFlagPassed = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.GreenFlagPassed).Average().Round(4),
+                             AvgQualityPasses = (from drd2 in gr
+                                                 where drd2.LoopData != null
+                                                 select drd2.LoopData.QualityPasses).Average().Round(4),
+                             AvgPercQualityPasses = (from drd2 in gr
+                                                     where drd2.LoopData != null
+                                                     select
+                                                     drd2.LoopData.GreenFlagPasses == 0 ? 0 : (drd2.LoopData.QualityPasses * 1.0) / (drd2.LoopData.GreenFlagPasses * 1.0)).Average().Round(4),
+                             AvgFastestLaps = (from drd2 in gr
+                                               where drd2.LoopData != null
+                                               select drd2.LoopData.FastestLaps).Average().Round(4),
+                             AvgPercFastestLaps = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select (drd2.LoopData.FastestLaps * 1.0) / (drd2.RaceResult.Laps * 1.0)).Average().Round(4),
+                             AvgTop15Laps = (from drd2 in gr
+                                             where drd2.LoopData != null
+                                             select drd2.LoopData.Top15Laps).Average().Round(4),
+                             AvgPercTop15Laps = (from drd2 in gr
+                                                 where drd2.LoopData != null
+                                                 select (drd2.LoopData.Top15Laps * 1.0) / (drd2.RaceResult.Laps * 1.0)).Average().Round(4),
+                             AvgRating = (from drd2 in gr
+                                          where drd2.LoopData != null
+                                          select drd2.LoopData.Rating / 150.0).Average().Round(4),
+                             AvgPitStopTimeRank = gr.Average(drd2 => drd2.PitStopRank).Round(4),
+                             RacesInGarage = ((
+                                              (from drd2 in gr
+                                               where drd2.PitStopData != null
+                                               select drd2.PitStopData.InGarage.ToInt() * new int?(1)).NullableSum()
+                                              )),
+                             PercRacesInGarage = ((
+                                                  (from drd2 in gr
+                                                   where drd2.PitStopData != null
+                                                   select (drd2.PitStopData.InGarage.ToInt() * new double?(1.0)) / (gr.Count() * 1.0)).NullableSum().Round(4)
+                                                  ))
                          })
                          .Distinct(new DriverStatsComparerByNumberAndName())
                          .ToList();
             }
             else if (mappingMethod == CarMappingMethod.NUMBER)
             {
-                stats = (from s in stats
-                         group s by s.CarNumber into gr
-                         from s in gr
-                         orderby gr.Average(s2 => s2.AvgFinish).Round(4) ascending
+                stats = (from drd in driverRaceDataList
+                         group drd by new { drd.RaceResult.CarNumber } into gr
+                         from drd in gr
+                         orderby gr.Average(drd2 => drd2.RaceResult.FinishPosition).Round(4) ascending
                          select new DriverStats
                          {
-                             CarNumber = s.CarNumber,
+                             CarNumber = drd.RaceResult.CarNumber,
                              Driver = null,
-                             AvgFinish = gr.Average(s2 => s2.AvgFinish).Round(4),
-                             AvgFinishExcludingDnf = gr.Average(s2 => s2.AvgFinishExcludingDnf).Round(4),
-                             LeadLapFinishes = gr.Sum(s2 => s2.LeadLapFinishes),
-                             AvgStart = gr.Average(s2 => s2.AvgStart).Round(4),
-                             BestFinish = gr.Min(s2 => s2.BestFinish),
-                             BestStart = gr.Min(s2 => s2.BestStart),
-                             RaceStarts = gr.Sum(s2 => s2.RaceStarts),
-                             PercRaceStarts = gr.Sum(s2 => s2.PercRaceStarts),
-                             AvgNumberOfStarters = gr.Average(s2 => s2.AvgNumberOfStarters).Round(4),
-                             Wins = gr.Sum(s2 => s2.Wins),
-                             Poles = gr.Sum(s2 => s2.Poles),
-                             Top5 = gr.Sum(s2 => s2.Top5),
-                             Top10 = gr.Sum(s2 => s2.Top10),
-                             DnfCrash = gr.Sum(s2 => s2.DnfCrash),
-                             DnfMechanical = gr.Sum(s2 => s2.DnfMechanical),
-                             PercLapsCompleted = gr.Average(s2 => s2.PercLapsCompleted).Round(4),
-                             PercLapsLed = gr.Average(s2 => s2.PercLapsLed).Round(4),
-                             AvgMidRacePosition = gr.Average(s2 => s2.AvgMidRacePosition).Round(4),
-                             AvgHighestPosition = gr.Average(s2 => s2.AvgHighestPosition).Round(4),
-                             AvgLowestPosition = gr.Average(s2 => s2.AvgLowestPosition).Round(4),
-                             AvgPosition = gr.Average(s2 => s2.AvgPosition).Round(4),
-                             AvgGreenFlagPasses = gr.Average(s2 => s2.AvgGreenFlagPasses).Round(4),
-                             AvgGreenFlagPassed = gr.Average(s2 => s2.AvgGreenFlagPassed).Round(4),
-                             AvgQualityPasses = gr.Average(s2 => s2.AvgQualityPasses).Round(4),
-                             AvgPercQualityPasses = gr.Average(s2 => s2.AvgPercQualityPasses).Round(4),
-                             AvgFastestLaps = gr.Average(s2 => s2.AvgFastestLaps).Round(4),
-                             AvgPercFastestLaps = gr.Average(s2 => s2.AvgPercFastestLaps).Round(4),
-                             AvgTop15Laps = gr.Average(s2 => s2.AvgTop15Laps).Round(4),
-                             AvgPercTop15Laps = gr.Average(s2 => s2.AvgPercTop15Laps).Round(4),
-                             AvgRating = gr.Average(s2 => s2.AvgRating).Round(4),
-                             AvgPitStopTimeRank = gr.Average(s2 => s2.AvgPitStopTimeRank).Round(4),
-                             RacesInGarage = (from s2 in gr select s2.RacesInGarage * new int?(1)).NullableSum(),
-                             PercRacesInGarage = gr.Average(s2 => s2.PercRacesInGarage).Round(4)
+                             AvgFinish = gr.Average(drd2 => (int?)drd2.RaceResult.FinishPosition).Round(4),
+                             AvgFinishExcludingDnf = gr.Where(drd2 => drd2.RaceResult.RaceState.IsDNF == false).Average(drd2 => (int?)drd2.RaceResult.FinishPosition).Round(4),
+                             LeadLapFinishes = (from drd2 in gr
+                                                join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                                where drd2.RaceResult.Laps == rinf.WinnerLaps
+                                                select drd2).Count(),
+                             AvgStart = gr.Average(drd2 => drd2.RaceResult.StartPosition).Round(4),
+                             BestFinish = (from drd2 in gr
+                                           where drd2.RaceResult != null
+                                           select drd2.RaceResult.FinishPosition).Min(),
+                             BestStart = (from drd2 in gr
+                                          where drd2.RaceResult != null
+                                          select drd2.RaceResult.StartPosition).Min(),
+                             RaceStarts = gr.Count(),
+                             PercRaceStarts = ((gr.Count() * 1.0) / (racesInfo.Count() * 1.0)).Round(4),
+                             AvgNumberOfStarters = (from drd2 in gr
+                                                    join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                                    select rinf.NumberOfStarters).Average().Round(4),
+                             Wins = (from drd2 in gr where drd2.RaceResult.FinishPosition == 1 select drd2).Count(),
+                             Poles = (from drd2 in gr where drd2.RaceResult.StartPosition == 1 select drd2).Count(),
+                             Top5 = (from drd2 in gr where drd2.RaceResult.FinishPosition <= 5 select drd2).Count(),
+                             Top10 = (from drd2 in gr where drd2.RaceResult.FinishPosition <= 10 select drd2).Count(),
+                             DnfCrash = (from drd2 in gr where drd2.RaceResult.RaceState.IsDNFCrash select drd2).Count(),
+                             DnfMechanical = (from drd2 in gr where drd2.RaceResult.RaceState.IsDNFMechanical select drd2).Count(),
+                             PercLapsCompleted = (from drd2 in gr
+                                                  join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                                  select (drd2.RaceResult.Laps * 1.0) / (rinf.WinnerLaps * 1.0)).Average().Round(4),
+                             PercLapsLed = (from drd2 in gr
+                                            join rinf in racesInfo on drd2.Race.Id equals rinf.Race.Id
+                                            select (drd2.RaceResult.LapsLed * 1.0) / (rinf.WinnerLaps * 1.0)).Average().Round(4),
+                             AvgMidRacePosition = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.MidRacePosition).Average().Round(4),
+                             AvgHighestPosition = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.HighestPosition).Average().Round(4),
+                             AvgLowestPosition = (from drd2 in gr
+                                                  where drd2.LoopData != null
+                                                  select drd2.LoopData.LowestPosition).Average().Round(4),
+                             AvgPosition = (from drd2 in gr
+                                            where drd2.LoopData != null
+                                            select drd2.LoopData.AveragePosition).Average().Round(4),
+                             AvgGreenFlagPasses = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.GreenFlagPasses).Average().Round(4),
+                             AvgGreenFlagPassed = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select drd2.LoopData.GreenFlagPassed).Average().Round(4),
+                             AvgQualityPasses = (from drd2 in gr
+                                                 where drd2.LoopData != null
+                                                 select drd2.LoopData.QualityPasses).Average().Round(4),
+                             AvgPercQualityPasses = (from drd2 in gr
+                                                     where drd2.LoopData != null
+                                                     select
+                                                     drd2.LoopData.GreenFlagPasses == 0 ? 0 : (drd2.LoopData.QualityPasses * 1.0) / (drd2.LoopData.GreenFlagPasses * 1.0)).Average().Round(4),
+                             AvgFastestLaps = (from drd2 in gr
+                                               where drd2.LoopData != null
+                                               select drd2.LoopData.FastestLaps).Average().Round(4),
+                             AvgPercFastestLaps = (from drd2 in gr
+                                                   where drd2.LoopData != null
+                                                   select (drd2.LoopData.FastestLaps * 1.0) / (drd2.RaceResult.Laps * 1.0)).Average().Round(4),
+                             AvgTop15Laps = (from drd2 in gr
+                                             where drd2.LoopData != null
+                                             select drd2.LoopData.Top15Laps).Average().Round(4),
+                             AvgPercTop15Laps = (from drd2 in gr
+                                                 where drd2.LoopData != null
+                                                 select (drd2.LoopData.Top15Laps * 1.0) / (drd2.RaceResult.Laps * 1.0)).Average().Round(4),
+                             AvgRating = (from drd2 in gr
+                                          where drd2.LoopData != null
+                                          select drd2.LoopData.Rating / 150.0).Average().Round(4),
+                             AvgPitStopTimeRank = gr.Average(drd2 => drd2.PitStopRank).Round(4),
+                             RacesInGarage = ((
+                                              (from drd2 in gr
+                                               where drd2.PitStopData != null
+                                               select drd2.PitStopData.InGarage.ToInt() * new int?(1)).NullableSum()
+                                              )),
+                             PercRacesInGarage = ((
+                                                  (from drd2 in gr
+                                                   where drd2.PitStopData != null
+                                                   select (drd2.PitStopData.InGarage.ToInt() * new double?(1.0)) / (gr.Count() * 1.0)).NullableSum().Round(4)
+                                                  ))
                          })
                          .Distinct(new DriverStatsComparerByNumberAndName())
                          .ToList();
