@@ -19,6 +19,7 @@ Following functionalities are offered:
 - A Windows based PC with Windows 7 SP1, Windows 8.1 or Windows 10 (recommended)
 - Of course, the game NASCAR Racing 2003 Season itself
 - The Microsoft .NET Framework 4.7.2 or higher
+- TCP Port 64646 must be available on your machine for the authentication mechanism to work
 
 ## Credits
 
