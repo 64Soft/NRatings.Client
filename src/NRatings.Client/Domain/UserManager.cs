@@ -40,17 +40,9 @@ namespace NRatings.Client.Domain
                     loginOngoing = true;
                     var client = GetAuth0Client(callingForm);
 
-                    //nativeBrowser.callbackManager = new CallbackManager("nratingspipe");
-                    //var loginResult = await client.LoginAsync(extraParameters: GetAuth0Params());
-
-                    var state = await client.PrepareLoginAsync(GetAuth0Params());
-                    nativeBrowser.StartUrl = state.StartUrl;
-                    nativeBrowser.callbackManager = new CallbackManager(state.State);
-
-                    var callbackManager = new CallbackManager(state.State);
-                    Process.Start(state.StartUrl);
-                    var authResponse = await callbackManager.RunServer();
-                    var loginResult = await client.ProcessResponseAsync(authResponse, state);
+                    Program.UserSettings.SetAuthSessionToken();
+                    nativeBrowser.callbackManager = new CallbackManager(Program.UserSettings.AuthSessionToken);
+                    var loginResult = await client.LoginAsync(extraParameters: GetAuth0Params());
 
                     loginOngoing = false;
 
@@ -59,7 +51,8 @@ namespace NRatings.Client.Domain
                         if (loginResult.User?.Identity is ClaimsIdentity identity)
                         {
                             user = identity;
-                            Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration);
+                            Program.UserSettings.SaveAccessToken(loginResult.AccessToken,
+                                loginResult.AccessTokenExpiration);
                             Program.UserSettings.SaveRefreshToken(loginResult.RefreshToken);
 
                             return new UserLoginResult(true);
@@ -76,6 +69,10 @@ namespace NRatings.Client.Domain
             catch (Exception ex)
             {
                 return new UserLoginResult(false, ex.Message);
+            }
+            finally
+            {
+                Program.UserSettings.ClearAuthSessionToken();
             }
         }
 
@@ -104,7 +101,12 @@ namespace NRatings.Client.Domain
             Program.UserSettings.ClearAccessToken();
             Program.UserSettings.ClearRefreshToken();
 
+            Program.UserSettings.SetAuthSessionToken();
+            nativeBrowser.callbackManager = new CallbackManager(Program.UserSettings.AuthSessionToken);
+
             await GetAuth0Client(callingForm).LogoutAsync();
+
+            Program.UserSettings.ClearAuthSessionToken();
         }
 
         public static async Task<string> GetUserInfoStringAsync(string propertySeparator = ";")
@@ -179,9 +181,9 @@ namespace NRatings.Client.Domain
                     ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
                     Browser = nativeBrowser,
                     RedirectUri = redirectUri,
+                    PostLogoutRedirectUri = redirectUri + "?logout=true"
                 };
 
-                clientOptions.PostLogoutRedirectUri = redirectUri;
                 auth0Client = new Auth0Client(clientOptions);
             }
 

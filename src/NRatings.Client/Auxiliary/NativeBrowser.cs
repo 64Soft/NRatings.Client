@@ -18,11 +18,12 @@ namespace NRatings.Client.Auxiliary
     class NativeBrowser : IBrowser
     {
         private string redirectBaseUri = ConfigurationManager.AppSettings["AuthNativeBrowserRedirectBaseUri"];
-        
+
         public Form CallingForm { get; set; }
         public string StartUrl { get; set; }
         public CallbackManager callbackManager { get; set; }
-        
+
+
         public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
         {
             this.StartUrl = options.StartUrl;

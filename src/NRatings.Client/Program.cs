@@ -24,6 +24,9 @@ namespace NRatings.Client
         [STAThread]
         public static async Task Main(string[] args)
         {
+            UserSettingsManager.CreateFoldersIfNeeded();
+            UserSettings = UserSettings.Read(); //READ THE USERSETTINGS FIRST
+
             if (args.Any())
             {
                 await ProcessCallback(args[0]);
@@ -40,10 +43,6 @@ namespace NRatings.Client
             try
             {
                 new RegistryConfig(CustomUriScheme).Configure();
-
-                UserSettingsManager.CreateFoldersIfNeeded();
-
-                UserSettings = UserSettings.Read(); //READ THE USERSETTINGS FIRST
 
                 if (UserSettings == null)
                     UserSettings = new UserSettings();
@@ -64,19 +63,16 @@ namespace NRatings.Client
 
         private static async Task ProcessCallback(string args)
         {
-            var lines = new List<string> { "Callback received" };
-            
-            var response = new AuthorizeResponse(args);
-            if (!String.IsNullOrWhiteSpace(response.State))
-            {
-                lines.Add($"Found state: {response.State}");
-                var callbackManager = new CallbackManager(response.State);
-                await callbackManager.RunClient(args);
-            }
-            else
-            {
-                lines.Add("Error: no state on response");
-            }
+            //var response = new AuthorizeResponse(args);
+
+            var callbackManager = new CallbackManager(UserSettings.AuthSessionToken);
+            await callbackManager.RunClient(args);
+
+            //if (!String.IsNullOrWhiteSpace(response.State))
+            //{
+            //    var callbackManager = new CallbackManager(response.State);
+            //    await callbackManager.RunClient(args);
+            //}
         }
 
     }

@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using IdentityModel.OidcClient;
 using NRatings.Client.Auxiliary;
 using NRatings.Client.GUI;
+using RandomStringCreator;
 
 namespace NRatings.Client.Domain
 {
@@ -16,6 +17,7 @@ namespace NRatings.Client.Domain
         public string DefaultFormula { get; set; }
         public List<NR2003Instance> NR2003Instances { get; set; }
 
+        public string AuthSessionToken { get; set; }
         public string AccesToken { get; set; }
         public DateTime? AccessTokenExpiration { get; set; }
         public string RefreshToken { get; set; }
@@ -24,6 +26,20 @@ namespace NRatings.Client.Domain
         {
             this.DefaultFormula = String.Empty;
             this.NR2003Instances = new List<NR2003Instance>();
+        }
+
+        public void SetAuthSessionToken()
+        {
+            this.AuthSessionToken = new StringCreator().Get(10);
+
+            this.Save();
+        }
+
+        public void ClearAuthSessionToken()
+        {
+            this.AuthSessionToken = null;
+
+            this.Save();
         }
 
         public void SaveAccessToken(string accessToken, DateTime accessTokenExpiration)
