@@ -129,13 +129,15 @@
     <Compile Include="ApiClient\DTO\Track.cs" />
     <Compile Include="ApiClient\DTO\TrackType.cs" />
     <Compile Include="ApiClient\NRatingsApiClient.cs" />
+    <Compile Include="Auxiliary\AuthHttpServer.cs" />
+    <Compile Include="Auxiliary\CallbackManager.cs" />
     <Compile Include="Auxiliary\Exceptions\DataProcessingException.cs" />
     <Compile Include="Auxiliary\ExtensionMethods.cs" />
     <Compile Include="Auxiliary\GenericBackWorker.cs" />
     <Compile Include="Auxiliary\Helper.cs" />
     <Compile Include="Auxiliary\EnumListItem.cs" />
-    <Compile Include="Auxiliary\AuthHttpServer.cs" />
     <Compile Include="Auxiliary\NativeBrowser.cs" />
+    <Compile Include="Auxiliary\RegistryConfig.cs" />
     <Compile Include="Business\RRDataFetcher.cs" />
     <Compile Include="Business\MainProcessor.cs" />
     <Compile Include="Business\RatingsModifier.cs" />

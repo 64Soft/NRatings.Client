@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,7 +38,20 @@ namespace NRatings.Client.Domain
                 else
                 {
                     loginOngoing = true;
-                    var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
+                    var client = GetAuth0Client(callingForm);
+
+                    //nativeBrowser.callbackManager = new CallbackManager("nratingspipe");
+                    //var loginResult = await client.LoginAsync(extraParameters: GetAuth0Params());
+
+                    var state = await client.PrepareLoginAsync(GetAuth0Params());
+                    nativeBrowser.StartUrl = state.StartUrl;
+                    nativeBrowser.callbackManager = new CallbackManager(state.State);
+
+                    var callbackManager = new CallbackManager(state.State);
+                    Process.Start(state.StartUrl);
+                    var authResponse = await callbackManager.RunServer();
+                    var loginResult = await client.ProcessResponseAsync(authResponse, state);
+
                     loginOngoing = false;
 
                     if (!loginResult.IsError)
@@ -157,15 +171,17 @@ namespace NRatings.Client.Domain
 
             if (auth0Client == null)
             {
+                var redirectUri = string.Format(Program.CustomUriScheme + "://callback");
+
                 var clientOptions = new Auth0ClientOptions
                 {
                     Domain = ConfigurationManager.AppSettings["Auth0Domain"],
                     ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
                     Browser = nativeBrowser,
-                    RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"],
+                    RedirectUri = redirectUri,
                 };
 
-                clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
+                clientOptions.PostLogoutRedirectUri = redirectUri;
                 auth0Client = new Auth0Client(clientOptions);
             }
 
