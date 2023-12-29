@@ -1242,20 +1242,19 @@ namespace NRatings.Client.GUI
 
 
 
+
         #endregion
 
-        #region Links
-
-        private void lnkDonate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        #region links
+        private void pictureKoFi_Click(object sender, EventArgs e)
         {
-            Process.Start("https://paypal.me/64racer");
+            Process.Start("https://ko-fi.com/64Soft");
         }
 
-        private void lnkTwitch_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://twitch.tv/64racer");
+            Process.Start("https://discord.gg/3j3zfRWyRa");
         }
-
         #endregion
 
 

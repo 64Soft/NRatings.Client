@@ -79,8 +79,10 @@ namespace NRatings.Client.GUI
             this.revertNameOnlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revertRatingsOnlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revertCompletelyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lnkDonate = new System.Windows.Forms.LinkLabel();
-            this.lnkTwitch = new System.Windows.Forms.LinkLabel();
+            this.pictureKoFi = new System.Windows.Forms.PictureBox();
+            this.rchTxtSupport = new System.Windows.Forms.RichTextBox();
+            this.pictureDiscord = new System.Windows.Forms.PictureBox();
+            this.lnkDiscord = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bsMods)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsNR2003Instances)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgCars)).BeginInit();
@@ -89,6 +91,8 @@ namespace NRatings.Client.GUI
             this.mnMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsRosters)).BeginInit();
             this.ctxMenuStripCars.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureKoFi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureDiscord)).BeginInit();
             this.SuspendLayout();
             // 
             // lblInstance
@@ -518,35 +522,61 @@ namespace NRatings.Client.GUI
             this.revertCompletelyToolStripMenuItem.Text = "Completely";
             this.revertCompletelyToolStripMenuItem.Click += new System.EventHandler(this.revertCompletelyToolStripMenuItem_Click);
             // 
-            // lnkDonate
+            // pictureKoFi
             // 
-            this.lnkDonate.AutoSize = true;
-            this.lnkDonate.Location = new System.Drawing.Point(12, 689);
-            this.lnkDonate.Name = "lnkDonate";
-            this.lnkDonate.Size = new System.Drawing.Size(42, 13);
-            this.lnkDonate.TabIndex = 24;
-            this.lnkDonate.TabStop = true;
-            this.lnkDonate.Text = "Donate";
-            this.lnkDonate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDonate_LinkClicked);
+            this.pictureKoFi.Image = global::NRatings.Client.Properties.Resources.kofi_button_red;
+            this.pictureKoFi.Location = new System.Drawing.Point(673, 675);
+            this.pictureKoFi.Name = "pictureKoFi";
+            this.pictureKoFi.Size = new System.Drawing.Size(284, 33);
+            this.pictureKoFi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureKoFi.TabIndex = 24;
+            this.pictureKoFi.TabStop = false;
+            this.pictureKoFi.Click += new System.EventHandler(this.pictureKoFi_Click);
             // 
-            // lnkTwitch
+            // rchTxtSupport
             // 
-            this.lnkTwitch.AutoSize = true;
-            this.lnkTwitch.Location = new System.Drawing.Point(833, 689);
-            this.lnkTwitch.Name = "lnkTwitch";
-            this.lnkTwitch.Size = new System.Drawing.Size(124, 13);
-            this.lnkTwitch.TabIndex = 26;
-            this.lnkTwitch.TabStop = true;
-            this.lnkTwitch.Text = "https://twitch.tv/64racer";
-            this.lnkTwitch.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkTwitch_LinkClicked);
+            this.rchTxtSupport.BackColor = System.Drawing.SystemColors.Control;
+            this.rchTxtSupport.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rchTxtSupport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rchTxtSupport.ForeColor = System.Drawing.Color.Red;
+            this.rchTxtSupport.Location = new System.Drawing.Point(425, 676);
+            this.rchTxtSupport.Name = "rchTxtSupport";
+            this.rchTxtSupport.ReadOnly = true;
+            this.rchTxtSupport.Size = new System.Drawing.Size(242, 32);
+            this.rchTxtSupport.TabIndex = 25;
+            this.rchTxtSupport.Text = "Running the NRatings infrastructure isn\'t free.\nIf you like the app, please consi" +
+    "der supporting -->";
+            // 
+            // pictureDiscord
+            // 
+            this.pictureDiscord.Image = global::NRatings.Client.Properties.Resources.discord_mark_blue;
+            this.pictureDiscord.Location = new System.Drawing.Point(15, 675);
+            this.pictureDiscord.Name = "pictureDiscord";
+            this.pictureDiscord.Size = new System.Drawing.Size(46, 33);
+            this.pictureDiscord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureDiscord.TabIndex = 26;
+            this.pictureDiscord.TabStop = false;
+            // 
+            // lnkDiscord
+            // 
+            this.lnkDiscord.AutoSize = true;
+            this.lnkDiscord.Location = new System.Drawing.Point(67, 689);
+            this.lnkDiscord.Name = "lnkDiscord";
+            this.lnkDiscord.Size = new System.Drawing.Size(94, 13);
+            this.lnkDiscord.TabIndex = 27;
+            this.lnkDiscord.TabStop = true;
+            this.lnkDiscord.Text = "Join us on Discord";
+            this.lnkDiscord.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkDiscord_LinkClicked);
             // 
             // frmNR2003Ratings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 711);
-            this.Controls.Add(this.lnkTwitch);
-            this.Controls.Add(this.lnkDonate);
+            this.Controls.Add(this.lnkDiscord);
+            this.Controls.Add(this.pictureDiscord);
+            this.Controls.Add(this.rchTxtSupport);
+            this.Controls.Add(this.pictureKoFi);
             this.Controls.Add(this.cmbNR2003Instance);
             this.Controls.Add(this.butSelectNoCars);
             this.Controls.Add(this.butSelectAllCars);
@@ -581,6 +611,8 @@ namespace NRatings.Client.GUI
             this.mnMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsRosters)).EndInit();
             this.ctxMenuStripCars.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureKoFi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureDiscord)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -636,8 +668,10 @@ namespace NRatings.Client.GUI
         private System.Windows.Forms.ToolStripMenuItem revertCompletelyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyRatingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteRatingsToolStripMenuItem;
-        private System.Windows.Forms.LinkLabel lnkDonate;
-        private System.Windows.Forms.LinkLabel lnkTwitch;
+        private System.Windows.Forms.PictureBox pictureKoFi;
+        private System.Windows.Forms.RichTextBox rchTxtSupport;
+        private System.Windows.Forms.PictureBox pictureDiscord;
+        private System.Windows.Forms.LinkLabel lnkDiscord;
     }
 }
 
