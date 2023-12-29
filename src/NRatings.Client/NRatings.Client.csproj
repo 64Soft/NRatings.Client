@@ -551,8 +551,8 @@
     <Content Include="EmbeddedFormulas\Synderart_v2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\kofi_button_stroke.png" />
     <None Include="Resources\discord-mark-blue.png" />
-    <None Include="Resources\kofi_button_red.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

@@ -73,9 +73,9 @@ namespace NRatings.Client.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap kofi_button_red {
+        internal static System.Drawing.Bitmap kofi_button_stroke {
             get {
-                object obj = ResourceManager.GetObject("kofi_button_red", resourceCulture);
+                object obj = ResourceManager.GetObject("kofi_button_stroke", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

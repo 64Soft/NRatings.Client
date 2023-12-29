@@ -88,7 +88,6 @@ namespace NRatings.Client.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dgCars)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsRealDrivers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsCars)).BeginInit();
-            this.mnMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsRosters)).BeginInit();
             this.ctxMenuStripCars.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureKoFi)).BeginInit();
@@ -246,11 +245,6 @@ namespace NRatings.Client.GUI
             // mnMenu
             // 
             this.mnMenu.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.mnMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.helpToolStripMenuItem,
-            this.devToolStripMenuItem});
             this.mnMenu.Location = new System.Drawing.Point(0, 0);
             this.mnMenu.Name = "mnMenu";
             this.mnMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -524,7 +518,7 @@ namespace NRatings.Client.GUI
             // 
             // pictureKoFi
             // 
-            this.pictureKoFi.Image = global::NRatings.Client.Properties.Resources.kofi_button_red;
+            this.pictureKoFi.Image = global::NRatings.Client.Properties.Resources.kofi_button_stroke;
             this.pictureKoFi.Location = new System.Drawing.Point(673, 675);
             this.pictureKoFi.Name = "pictureKoFi";
             this.pictureKoFi.Size = new System.Drawing.Size(284, 33);
@@ -539,20 +533,20 @@ namespace NRatings.Client.GUI
             this.rchTxtSupport.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rchTxtSupport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rchTxtSupport.ForeColor = System.Drawing.Color.Red;
-            this.rchTxtSupport.Location = new System.Drawing.Point(425, 676);
+            this.rchTxtSupport.Location = new System.Drawing.Point(377, 676);
             this.rchTxtSupport.Name = "rchTxtSupport";
             this.rchTxtSupport.ReadOnly = true;
-            this.rchTxtSupport.Size = new System.Drawing.Size(242, 32);
+            this.rchTxtSupport.Size = new System.Drawing.Size(290, 32);
             this.rchTxtSupport.TabIndex = 25;
             this.rchTxtSupport.Text = "Running the NRatings infrastructure isn\'t free.\nIf you like the app, please consi" +
-    "der supporting -->";
+    "der supporting. Click here-->";
             // 
             // pictureDiscord
             // 
             this.pictureDiscord.Image = global::NRatings.Client.Properties.Resources.discord_mark_blue;
-            this.pictureDiscord.Location = new System.Drawing.Point(15, 675);
+            this.pictureDiscord.Location = new System.Drawing.Point(15, 676);
             this.pictureDiscord.Name = "pictureDiscord";
-            this.pictureDiscord.Size = new System.Drawing.Size(46, 33);
+            this.pictureDiscord.Size = new System.Drawing.Size(46, 32);
             this.pictureDiscord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureDiscord.TabIndex = 26;
             this.pictureDiscord.TabStop = false;
@@ -607,8 +601,6 @@ namespace NRatings.Client.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dgCars)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsRealDrivers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsCars)).EndInit();
-            this.mnMenu.ResumeLayout(false);
-            this.mnMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsRosters)).EndInit();
             this.ctxMenuStripCars.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureKoFi)).EndInit();
