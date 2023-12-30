@@ -88,6 +88,7 @@ namespace NRatings.Client.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dgCars)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsRealDrivers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsCars)).BeginInit();
+            this.mnMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsRosters)).BeginInit();
             this.ctxMenuStripCars.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureKoFi)).BeginInit();
@@ -245,6 +246,11 @@ namespace NRatings.Client.GUI
             // mnMenu
             // 
             this.mnMenu.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.mnMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.fileToolStripMenuItem,
+                this.toolsToolStripMenuItem,
+                this.helpToolStripMenuItem,
+                this.devToolStripMenuItem});
             this.mnMenu.Location = new System.Drawing.Point(0, 0);
             this.mnMenu.Name = "mnMenu";
             this.mnMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -601,6 +607,8 @@ namespace NRatings.Client.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dgCars)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsRealDrivers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsCars)).EndInit();
+            this.mnMenu.ResumeLayout(false);
+            this.mnMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsRosters)).EndInit();
             this.ctxMenuStripCars.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureKoFi)).EndInit();
