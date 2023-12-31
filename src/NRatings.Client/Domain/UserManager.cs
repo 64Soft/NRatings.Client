@@ -32,20 +32,20 @@ namespace NRatings.Client.Domain
                     return new UserLoginResult(true);
 
                 //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
-                if (loginOngoing)
-                    Process.Start(nativeBrowser.StartUrl);
-                else
-                {
-                    loginOngoing = true;
+                //if (loginOngoing)
+                //    Process.Start(nativeBrowser.StartUrl);
+                //else
+                //{
+                    //loginOngoing = true;
                     var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
-                    loginOngoing = false;
+                    //loginOngoing = false;
 
                     if (!loginResult.IsError)
                     {
                         if (loginResult.User?.Identity is ClaimsIdentity identity)
                         {
                             user = identity;
-                            Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration);
+                            Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration.LocalDateTime);
                             Program.UserSettings.SaveRefreshToken(loginResult.RefreshToken);
 
                             return new UserLoginResult(true);
@@ -55,7 +55,7 @@ namespace NRatings.Client.Domain
                     {
                         return new UserLoginResult(false, loginResult.Error);
                     }
-                }
+                //}
 
                 return null;
             }
@@ -113,7 +113,7 @@ namespace NRatings.Client.Domain
                 var tokenResult = await GetAuth0Client().RefreshTokenAsync(Program.UserSettings.RefreshToken);
                 if (!tokenResult.IsError)
                 {
-                    Program.UserSettings.SaveAccessToken(tokenResult.AccessToken, tokenResult.AccessTokenExpiration);
+                    Program.UserSettings.SaveAccessToken(tokenResult.AccessToken, tokenResult.AccessTokenExpiration.LocalDateTime);
                     if (tokenResult.RefreshToken != null)
                         Program.UserSettings.SaveRefreshToken(tokenResult.RefreshToken);
                 }
@@ -161,8 +161,9 @@ namespace NRatings.Client.Domain
                 {
                     Domain = ConfigurationManager.AppSettings["Auth0Domain"],
                     ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
-                    Browser = nativeBrowser,
-                    RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"],
+                    Scope = "openid profile email offline_access",
+                    //Browser = nativeBrowser,
+                    //RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"],
                 };
 
                 clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
@@ -178,10 +179,6 @@ namespace NRatings.Client.Domain
             {
                 {
                     "audience", ConfigurationManager.AppSettings["Auth0ApiAudience"]
-                },
-
-                {
-                    "scope", "openid profile email offline_access"
                 }
             };
 
