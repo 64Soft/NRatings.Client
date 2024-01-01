@@ -14,7 +14,6 @@ namespace NRatings.Client.Domain
     {
         private static ClaimsIdentity user;
         private static NativeBrowser nativeBrowser = new NativeBrowser();
-        private static Auth0Client auth0Client;
         private static bool loginOngoing;
 
         public static string UserName => user?.FindFirst("name")?.Value;
@@ -32,7 +31,7 @@ namespace NRatings.Client.Domain
                     return new UserLoginResult(true);
 
                 //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
-                if (loginOngoing)
+                if (loginOngoing && Program.UserSettings.UseEmbeddedBrowserForLogin == false)
                     Process.Start(nativeBrowser.StartUrl);
                 else
                 {
@@ -45,7 +44,7 @@ namespace NRatings.Client.Domain
                         if (loginResult.User?.Identity is ClaimsIdentity identity)
                         {
                             user = identity;
-                            Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration);
+                            Program.UserSettings.SaveAccessToken(loginResult.AccessToken, loginResult.AccessTokenExpiration.LocalDateTime);
                             Program.UserSettings.SaveRefreshToken(loginResult.RefreshToken);
 
                             return new UserLoginResult(true);
@@ -113,7 +112,7 @@ namespace NRatings.Client.Domain
                 var tokenResult = await GetAuth0Client().RefreshTokenAsync(Program.UserSettings.RefreshToken);
                 if (!tokenResult.IsError)
                 {
-                    Program.UserSettings.SaveAccessToken(tokenResult.AccessToken, tokenResult.AccessTokenExpiration);
+                    Program.UserSettings.SaveAccessToken(tokenResult.AccessToken, tokenResult.AccessTokenExpiration.LocalDateTime);
                     if (tokenResult.RefreshToken != null)
                         Program.UserSettings.SaveRefreshToken(tokenResult.RefreshToken);
                 }
@@ -155,21 +154,21 @@ namespace NRatings.Client.Domain
         {
             nativeBrowser.CallingForm = callingForm;
 
-            if (auth0Client == null)
+            var clientOptions = new Auth0ClientOptions
             {
-                var clientOptions = new Auth0ClientOptions
-                {
-                    Domain = ConfigurationManager.AppSettings["Auth0Domain"],
-                    ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
-                    Browser = nativeBrowser,
-                    RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"],
-                };
+                Domain = ConfigurationManager.AppSettings["Auth0Domain"],
+                ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
+                Scope = "openid profile email offline_access"
+            };
 
-                clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
-                auth0Client = new Auth0Client(clientOptions);
+            if (Program.UserSettings.UseEmbeddedBrowserForLogin == false)
+            {
+                clientOptions.Browser = nativeBrowser;
+                clientOptions.RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"];
             }
 
-            return auth0Client;
+            clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
+            return new Auth0Client(clientOptions);
         }
 
         private static Dictionary<string, string> GetAuth0Params()
@@ -178,10 +177,6 @@ namespace NRatings.Client.Domain
             {
                 {
                     "audience", ConfigurationManager.AppSettings["Auth0ApiAudience"]
-                },
-
-                {
-                    "scope", "openid profile email offline_access"
                 }
             };
 

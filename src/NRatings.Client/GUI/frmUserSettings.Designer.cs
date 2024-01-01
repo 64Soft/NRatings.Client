@@ -59,6 +59,8 @@ namespace NRatings.Client.GUI
             this.pathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.browseDataGridViewButtonColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.isDefaultDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.lblEmbeddedBrowser = new System.Windows.Forms.Label();
+            this.chkUseEmbeddedBrowser = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.bsNR2003Instances)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsUserSettings)).BeginInit();
             this.grpUserInfo.SuspendLayout();
@@ -97,6 +99,8 @@ namespace NRatings.Client.GUI
             // 
             this.grpUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpUserInfo.Controls.Add(this.lblEmbeddedBrowser);
+            this.grpUserInfo.Controls.Add(this.chkUseEmbeddedBrowser);
             this.grpUserInfo.Controls.Add(this.butLogout);
             this.grpUserInfo.Controls.Add(this.butLogin);
             this.grpUserInfo.Controls.Add(this.txtUserInfo);
@@ -246,6 +250,7 @@ namespace NRatings.Client.GUI
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Position";
             this.bindingNavigatorPositionItem.AutoSize = false;
+            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -336,6 +341,28 @@ namespace NRatings.Client.GUI
             this.isDefaultDataGridViewCheckBoxColumn.HeaderText = "IsDefault";
             this.isDefaultDataGridViewCheckBoxColumn.Name = "isDefaultDataGridViewCheckBoxColumn";
             // 
+            // lblEmbeddedBrowser
+            // 
+            this.lblEmbeddedBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblEmbeddedBrowser.AutoSize = true;
+            this.lblEmbeddedBrowser.Location = new System.Drawing.Point(401, 16);
+            this.lblEmbeddedBrowser.Name = "lblEmbeddedBrowser";
+            this.lblEmbeddedBrowser.Size = new System.Drawing.Size(184, 39);
+            this.lblEmbeddedBrowser.TabIndex = 6;
+            this.lblEmbeddedBrowser.Text = "If you encounter difficulties logging in,\r\ncheck the box below to try with an\r\nem" +
+    "bedded browser.";
+            // 
+            // chkUseEmbeddedBrowser
+            // 
+            this.chkUseEmbeddedBrowser.AutoSize = true;
+            this.chkUseEmbeddedBrowser.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.bsUserSettings, "UseEmbeddedBrowserForLogin", true));
+            this.chkUseEmbeddedBrowser.Location = new System.Drawing.Point(404, 71);
+            this.chkUseEmbeddedBrowser.Name = "chkUseEmbeddedBrowser";
+            this.chkUseEmbeddedBrowser.Size = new System.Drawing.Size(212, 17);
+            this.chkUseEmbeddedBrowser.TabIndex = 5;
+            this.chkUseEmbeddedBrowser.Text = "Use embedded browser for login/logout";
+            this.chkUseEmbeddedBrowser.UseVisualStyleBackColor = true;
+            // 
             // frmUserSettings
             // 
             this.AcceptButton = this.butClose;
@@ -393,5 +420,7 @@ namespace NRatings.Client.GUI
         private System.Windows.Forms.DataGridViewTextBoxColumn pathDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn browseDataGridViewButtonColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn isDefaultDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.Label lblEmbeddedBrowser;
+        private System.Windows.Forms.CheckBox chkUseEmbeddedBrowser;
     }
 }
