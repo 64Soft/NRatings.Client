@@ -13,6 +13,7 @@ namespace NRatings.Client.Domain
     {
         private static string filePath = Path.Combine(UserSettingsManager.GetSettingsPath(), @"usersettings.xml");
 
+        public bool UseEmbeddedBrowserForLogin { get; set; }
         public string DefaultFormula { get; set; }
         public List<NR2003Instance> NR2003Instances { get; set; }
 

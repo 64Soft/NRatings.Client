@@ -32,13 +32,13 @@ namespace NRatings.Client.Domain
                     return new UserLoginResult(true);
 
                 //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
-                //if (loginOngoing)
-                //    Process.Start(nativeBrowser.StartUrl);
-                //else
-                //{
-                    //loginOngoing = true;
+                if (loginOngoing && Program.UserSettings.UseEmbeddedBrowserForLogin == false)
+                    Process.Start(nativeBrowser.StartUrl);
+                else
+                {
+                    loginOngoing = true;
                     var loginResult = await GetAuth0Client(callingForm).LoginAsync(extraParameters: GetAuth0Params());
-                    //loginOngoing = false;
+                    loginOngoing = false;
 
                     if (!loginResult.IsError)
                     {
@@ -55,7 +55,7 @@ namespace NRatings.Client.Domain
                     {
                         return new UserLoginResult(false, loginResult.Error);
                     }
-                //}
+                }
 
                 return null;
             }
@@ -155,22 +155,21 @@ namespace NRatings.Client.Domain
         {
             nativeBrowser.CallingForm = callingForm;
 
-            if (auth0Client == null)
+            var clientOptions = new Auth0ClientOptions
             {
-                var clientOptions = new Auth0ClientOptions
-                {
-                    Domain = ConfigurationManager.AppSettings["Auth0Domain"],
-                    ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
-                    Scope = "openid profile email offline_access",
-                    //Browser = nativeBrowser,
-                    //RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"],
-                };
+                Domain = ConfigurationManager.AppSettings["Auth0Domain"],
+                ClientId = ConfigurationManager.AppSettings["Auth0ClientId"],
+                Scope = "openid profile email offline_access"
+            };
 
-                clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
-                auth0Client = new Auth0Client(clientOptions);
+            if (Program.UserSettings.UseEmbeddedBrowserForLogin == false)
+            {
+                clientOptions.Browser = nativeBrowser;
+                clientOptions.RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"];
             }
 
-            return auth0Client;
+            clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
+            return new Auth0Client(clientOptions);
         }
 
         private static Dictionary<string, string> GetAuth0Params()
