@@ -14,7 +14,6 @@ namespace NRatings.Client.Domain
     {
         private static ClaimsIdentity user;
         private static NativeBrowser nativeBrowser = new NativeBrowser();
-        private static Auth0Client auth0Client;
         private static bool loginOngoing;
 
         public static string UserName => user?.FindFirst("name")?.Value;
