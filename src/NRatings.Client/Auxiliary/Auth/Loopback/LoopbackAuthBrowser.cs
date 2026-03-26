@@ -12,8 +12,8 @@ namespace NRatings.Client.Auxiliary.Auth.Loopback
     {
         private readonly string postLoopbackRedirectBaseUri = ConfigurationManager.AppSettings["AuthNativeBrowserRedirectBaseUri"];
 
-        public string OidcLoginRedirectUri => "http://127.0.0.1/"; //todo: manage selected port
-        public string OidcLogoutRedirectUri => "http://127.0.0.1/"; //todo: manage selected port
+        public string OidcLoginRedirectUri => Program.HttpServer.RedirectUri;
+        public string OidcLogoutRedirectUri => Program.HttpServer.RedirectUri;
 
         public Form CallingForm { get; set; }
         public string StartUrl { get; private set; }
