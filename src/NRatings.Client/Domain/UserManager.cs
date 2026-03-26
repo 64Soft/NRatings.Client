@@ -6,14 +6,16 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Auth0.OidcClient;
-using NRatings.Client.Auxiliary;
+using NRatings.Client.Auxiliary.Auth;
+using NRatings.Client.Auxiliary.Auth.CustomUri;
 
 namespace NRatings.Client.Domain
 {
     public static class UserManager
     {
         private static ClaimsIdentity user;
-        private static NativeBrowser nativeBrowser = new NativeBrowser();
+        //private static IAuthBrowser browser = new NativeBrowser();
+        private static IAuthBrowser browser = new CustomUriAuthBrowser();
         private static bool loginOngoing;
 
         public static string UserName => user?.FindFirst("name")?.Value;
@@ -32,7 +34,7 @@ namespace NRatings.Client.Domain
 
                 //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
                 if (loginOngoing && Program.UserSettings.UseEmbeddedBrowserForLogin == false)
-                    Process.Start(nativeBrowser.StartUrl);
+                    Process.Start(browser.StartUrl);
                 else
                 {
                     loginOngoing = true;
@@ -152,7 +154,7 @@ namespace NRatings.Client.Domain
 
         private static Auth0Client GetAuth0Client(Form callingForm = null)
         {
-            nativeBrowser.CallingForm = callingForm;
+            browser.CallingForm = callingForm;
 
             var clientOptions = new Auth0ClientOptions
             {
@@ -163,11 +165,15 @@ namespace NRatings.Client.Domain
 
             if (Program.UserSettings.UseEmbeddedBrowserForLogin == false)
             {
-                clientOptions.Browser = nativeBrowser;
-                clientOptions.RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"];
+                clientOptions.Browser = browser;
+                clientOptions.RedirectUri = browser.OidcLoginRedirectUri;
+                clientOptions.PostLogoutRedirectUri = browser.OidcLogoutRedirectUri;
+            }
+            else
+            {
+                clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
             }
 
-            clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
             return new Auth0Client(clientOptions);
         }
 

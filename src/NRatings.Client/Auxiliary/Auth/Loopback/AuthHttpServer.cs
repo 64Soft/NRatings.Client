@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NRatings.Client.Auxiliary
+namespace NRatings.Client.Auxiliary.Auth.Loopback
 {
     public class AuthHttpServer : IDisposable
     {
-        private string serverUri = ConfigurationManager.AppSettings["AuthHttpServer"];
+        private string serverUri = "http://127.0.0.1/"; //todo: manage selected port
         private HttpListener http;
 
         public AuthHttpServer()
