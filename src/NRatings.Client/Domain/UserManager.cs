@@ -32,8 +32,8 @@ namespace NRatings.Client.Domain
             if (Program.UserSettings.UseEmbeddedBrowserForLogin)
                 return null;
 
-            if (Program.HttpServer.IsRunning())
-                return new LoopbackAuthBrowser();
+            //if (Program.HttpServer.IsRunning())
+            //    return new LoopbackAuthBrowser();
 
             return new CustomUriAuthBrowser();
         }

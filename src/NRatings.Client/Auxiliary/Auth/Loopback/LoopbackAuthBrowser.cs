@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Duende.IdentityModel.OidcClient.Browser;
 using Flurl;
-using IdentityModel.OidcClient.Browser;
 
 namespace NRatings.Client.Auxiliary.Auth.Loopback
 {

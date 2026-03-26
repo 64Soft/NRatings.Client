@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using IdentityModel.OidcClient.Browser;
+using Duende.IdentityModel.OidcClient.Browser;
 
 namespace NRatings.Client.Auxiliary.Auth
 {
