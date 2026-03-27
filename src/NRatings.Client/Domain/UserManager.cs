@@ -6,19 +6,37 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Auth0.OidcClient;
-using NRatings.Client.Auxiliary;
+using NRatings.Client.Auxiliary.Auth;
+using NRatings.Client.Auxiliary.Auth.CustomUri;
+using NRatings.Client.Auxiliary.Auth.Loopback;
 
 namespace NRatings.Client.Domain
 {
     public static class UserManager
     {
         private static ClaimsIdentity user;
-        private static NativeBrowser nativeBrowser = new NativeBrowser();
+        private static IAuthBrowser activeBrowser;
         private static bool loginOngoing;
 
         public static string UserName => user?.FindFirst("name")?.Value;
         public static string Email => user?.FindFirst("email")?.Value;
 
+        /// <summary>
+        /// Determines the active browser based on priority:
+        /// 1. Loopback (if HTTP server started successfully)
+        /// 2. Custom URI scheme
+        /// Returns null when the embedded WebView2 browser should be used.
+        /// </summary>
+        private static IAuthBrowser GetActiveBrowser()
+        {
+            if (Program.UserSettings.UseEmbeddedBrowserForLogin)
+                return null;
+
+            if (Program.HttpServer.IsRunning())
+                return new LoopbackAuthBrowser();
+
+            return new CustomUriAuthBrowser();
+        }
 
         public static async Task<UserLoginResult> LoginAsync(Form callingForm = null)
         {
@@ -30,9 +48,9 @@ namespace NRatings.Client.Domain
                 if (HasValidAccessToken())
                     return new UserLoginResult(true);
 
-                //if user previously started login process but closed browser, an existing NativeBrowser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
-                if (loginOngoing && Program.UserSettings.UseEmbeddedBrowserForLogin == false)
-                    Process.Start(nativeBrowser.StartUrl);
+                //if user previously started login process but closed browser, an existing browser object is still awaiting the result. If that is the case, just reopen the browser with the startUrl
+                if (loginOngoing && activeBrowser != null)
+                    Process.Start(activeBrowser.StartUrl);
                 else
                 {
                     loginOngoing = true;
@@ -152,7 +170,7 @@ namespace NRatings.Client.Domain
 
         private static Auth0Client GetAuth0Client(Form callingForm = null)
         {
-            nativeBrowser.CallingForm = callingForm;
+            activeBrowser = GetActiveBrowser();
 
             var clientOptions = new Auth0ClientOptions
             {
@@ -161,13 +179,19 @@ namespace NRatings.Client.Domain
                 Scope = "openid profile email offline_access"
             };
 
-            if (Program.UserSettings.UseEmbeddedBrowserForLogin == false)
+            if (activeBrowser != null)
             {
-                clientOptions.Browser = nativeBrowser;
-                clientOptions.RedirectUri = ConfigurationManager.AppSettings["AuthHttpServer"];
+                activeBrowser.CallingForm = callingForm;
+                clientOptions.Browser = activeBrowser;
+                clientOptions.RedirectUri = activeBrowser.OidcLoginRedirectUri;
+                clientOptions.PostLogoutRedirectUri = activeBrowser.OidcLogoutRedirectUri;
+            }
+            else
+            {
+                // Embedded WebView2 browser (Auth0 SDK default)
+                clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
             }
 
-            clientOptions.PostLogoutRedirectUri = clientOptions.RedirectUri;
             return new Auth0Client(clientOptions);
         }
 

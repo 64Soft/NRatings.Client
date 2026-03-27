@@ -100,6 +100,7 @@
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -109,6 +110,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -129,13 +131,17 @@
     <Compile Include="ApiClient\DTO\Track.cs" />
     <Compile Include="ApiClient\DTO\TrackType.cs" />
     <Compile Include="ApiClient\NRatingsApiClient.cs" />
+    <Compile Include="Auxiliary\Auth\CustomUri\CallbackPipe.cs" />
+    <Compile Include="Auxiliary\Auth\CustomUri\CustomUriAuthBrowser.cs" />
+    <Compile Include="Auxiliary\Auth\IAuthBrowser.cs" />
     <Compile Include="Auxiliary\Exceptions\DataProcessingException.cs" />
     <Compile Include="Auxiliary\ExtensionMethods.cs" />
     <Compile Include="Auxiliary\GenericBackWorker.cs" />
     <Compile Include="Auxiliary\Helper.cs" />
     <Compile Include="Auxiliary\EnumListItem.cs" />
-    <Compile Include="Auxiliary\AuthHttpServer.cs" />
-    <Compile Include="Auxiliary\NativeBrowser.cs" />
+    <Compile Include="Auxiliary\Auth\Loopback\AuthHttpServer.cs" />
+    <Compile Include="Auxiliary\Auth\Loopback\LoopbackAuthBrowser.cs" />
+    <Compile Include="Auxiliary\Auth\CustomUri\UriSchemeRegistrar.cs" />
     <Compile Include="Business\RRDataFetcher.cs" />
     <Compile Include="Business\MainProcessor.cs" />
     <Compile Include="Business\RatingsModifier.cs" />
@@ -500,10 +506,10 @@
   <ItemGroup />
   <ItemGroup>
     <PackageReference Include="Auth0.OidcClient.WinForms">
-      <Version>4.0.0</Version>
+      <Version>4.4.0</Version>
     </PackageReference>
     <PackageReference Include="Flurl.Http">
-      <Version>4.0.0</Version>
+      <Version>4.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets">
       <Version>3.0.0</Version>
@@ -514,19 +520,19 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
-      <Version>8.0.0</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Memory">
-      <Version>4.5.5</Version>
+      <Version>4.6.3</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>6.0.0</Version>
+      <Version>6.1.2</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Encodings.Web">
-      <Version>8.0.0</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
-      <Version>8.0.0</Version>
+      <Version>10.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
